@@ -13,11 +13,13 @@ import LoginModal from './components/LoginModal';
 import TeacherSelectionView from './components/TeacherSelectionView';
 import TeacherScheduleView from './components/TeacherScheduleView';
 import AsistenciaView from './components/AsistenciaView';
+import ReunionesView from './components/ReunionesView';
 
 function App() {
   const [currentView, setCurrentView] = useState('teacher-selection'); // 'teacher-selection', 'teacher-schedule', 'asistencia', 'dashboard', 'maestros', 'calendario'
   const [selectedTeacher, setSelectedTeacher] = useState(null);
   const [clases, setClases] = useState([]);
+  const [reuniones, setReuniones] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showClassForm, setShowClassForm] = useState(false);
   const [editingClase, setEditingClase] = useState(null);
@@ -47,6 +49,9 @@ function App() {
       }
       if (data.ministerio_infantil?.estudiantes) {
         setEstudiantes(data.ministerio_infantil.estudiantes);
+      }
+      if (data.ministerio_infantil?.reuniones) {
+        setReuniones(data.ministerio_infantil.reuniones);
       }
     } catch (err) {
       console.error("Error fetching data:", err);
@@ -199,6 +204,16 @@ function App() {
         />
       )}
 
+      {currentView === 'reuniones' && (
+        <ReunionesView
+          reuniones={reuniones}
+          onNavigate={setCurrentView}
+          isAdmin={canManageContent}
+          selectedTeacher={selectedTeacher}
+          onRefresh={fetchClases}
+        />
+      )}
+
       {currentView === 'reportes' && (
         <Reportes
           clases={clases}
@@ -263,6 +278,7 @@ function App() {
           onDelete={handleDeleteClass}
           onDuplicate={handleDuplicateClass}
           isAdmin={canManageContent}
+          onRefresh={fetchClases}
         />
       )}
 

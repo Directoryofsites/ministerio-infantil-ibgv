@@ -151,6 +151,10 @@ const Dashboard = ({ clases, onSelectClase, onNavigate, onNewClass, onEditObserv
                     <span className="material-symbols-outlined !text-[26px] fill-1">menu_book</span>
                     <span className="text-[10px] font-black uppercase tracking-widest">Lecciones</span>
                 </button>
+                <button className="flex flex-col items-center gap-1 text-charcoal/40 hover:text-charcoal transition-colors" onClick={() => onNavigate('reuniones')}>
+                    <span className="material-symbols-outlined !text-[26px]">event</span>
+                    <span className="text-[10px] font-bold uppercase tracking-widest">Reuniones</span>
+                </button>
                 <button className="flex flex-col items-center gap-1 text-charcoal/40 hover:text-charcoal transition-colors" onClick={() => onNavigate('estudiantes')}>
                     <span className="material-symbols-outlined !text-[26px]">school</span>
                     <span className="text-[10px] font-bold uppercase tracking-widest">Alumnos</span>

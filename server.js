@@ -8,7 +8,8 @@ dotenv.config();
 
 const app = express();
 app.use(cors());
-app.use(express.json());
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
 const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
@@ -130,10 +131,13 @@ app.get('/api/ministerio', async (req, res) => {
         const gruposRes = await pool.query('SELECT * FROM grupos_edad');
         const maestrosRes = await pool.query('SELECT * FROM maestros');
 
+        const reunionesRes = await pool.query('SELECT * FROM reuniones ORDER BY fecha ASC');
+
         const progRes = await pool.query(`
         SELECT
         p.id, p.fecha, p.leccion_titulo, p.leccion_pasaje, p.leccion_enfasis, p.leccion_teologia,
             p.maestro_3_7, p.maestro_8_11, p.maestro_adolescentes, p.observaciones,
+            p.archivo_pdf_nombre,
             m1.nombre as m_nombre_1,
             m2.nombre as m_nombre_2,
             m3.nombre as m_nombre_3
@@ -152,6 +156,9 @@ app.get('/api/ministerio', async (req, res) => {
                 },
                 maestros: maestrosRes.rows.map(m => ({
                     id: m.id, nombre: m.nombre, especialidad: m.especialidad, activo: m.activo, foto_url: m.foto_url, rol: m.rol || 'Invitado', pin: m.pin
+                })),
+                reuniones: reunionesRes.rows.map(r => ({
+                    id: r.id, titulo: r.titulo, tipo: r.tipo, fecha: r.fecha ? new Date(r.fecha).toISOString().split('T')[0] : null, hora: r.hora, enlace: r.enlace, descripcion: r.descripcion
                 })),
                 programacion: progRes.rows.map(p => ({
                     id: p.id,
@@ -173,7 +180,9 @@ app.get('/api/ministerio', async (req, res) => {
                         maestro_adolescentes: p.maestro_adolescentes
                     },
                     rawFecha: p.fecha,
-                    observaciones: p.observaciones || ''
+                    observaciones: p.observaciones || '',
+                    tiene_pdf: !!p.archivo_pdf_nombre,
+                    pdf_nombre: p.archivo_pdf_nombre || null
                 }))
             }
         };
@@ -275,6 +284,89 @@ app.delete('/api/programacion/:id', async (req, res) => {
     } catch (err) {
         console.error("!!! Error DELETE /api/programacion:", err);
         res.status(500).json({ error: 'Server error deleting', details: err.message });
+    }
+});
+// --- RUTAS PDF PROGRAMACION ---
+app.post('/api/programacion/:id/pdf', async (req, res) => {
+    const id = req.params.id.trim();
+    const { pdf_base64, pdf_nombre } = req.body;
+    try {
+        if (!pdf_base64 || !pdf_nombre) return res.status(400).json({ error: 'Faltan datos del PDF' });
+
+        const base64Data = pdf_base64.replace(/^data:application\/pdf;base64,/, "");
+        const buffer = Buffer.from(base64Data, 'base64');
+
+        await pool.query('UPDATE programacion SET archivo_pdf_datos = $1, archivo_pdf_nombre = $2 WHERE id = $3', [buffer, pdf_nombre, id]);
+        res.json({ success: true, message: 'PDF guardado exitosamente' });
+    } catch (err) {
+        console.error("!!! Error POST /api/programacion/:id/pdf:", err);
+        res.status(500).json({ error: 'Error al subir PDF' });
+    }
+});
+app.delete('/api/programacion/:id/pdf', async (req, res) => {
+    const id = req.params.id.trim();
+    try {
+        await pool.query('UPDATE programacion SET archivo_pdf_datos = NULL, archivo_pdf_nombre = NULL WHERE id = $1', [id]);
+        res.json({ success: true, message: 'PDF eliminado' });
+    } catch (err) {
+        console.error("!!! Error DELETE /api/programacion/:id/pdf:", err);
+        res.status(500).json({ error: 'Error al eliminar PDF' });
+    }
+});
+app.get('/api/programacion/:id/pdf', async (req, res) => {
+    const id = req.params.id.trim();
+    try {
+        const result = await pool.query('SELECT archivo_pdf_datos, archivo_pdf_nombre FROM programacion WHERE id = $1', [id]);
+        if (result.rowCount === 0 || !result.rows[0].archivo_pdf_datos) {
+            return res.status(404).json({ error: 'PDF no encontrado' });
+        }
+        const file = result.rows[0];
+        res.setHeader('Content-Type', 'application/pdf');
+        res.setHeader('Content-Disposition', `attachment; filename="${file.archivo_pdf_nombre}"`);
+        res.send(file.archivo_pdf_datos);
+    } catch (err) {
+        console.error("!!! Error GET /api/programacion/:id/pdf:", err);
+        res.status(500).json({ error: 'Error al descargar PDF' });
+    }
+});
+
+// --- RUTAS REUNIONES ---
+app.post('/api/reuniones', async (req, res) => {
+    const { id, titulo, tipo, fecha, hora, enlace, descripcion } = req.body;
+    try {
+        await pool.query(
+            `INSERT INTO reuniones (id, titulo, tipo, fecha, hora, enlace, descripcion)
+             VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+            [id, titulo, tipo, fecha, hora || null, enlace || null, descripcion || null]
+        );
+        res.json({ success: true, message: 'Reunión creada' });
+    } catch (err) {
+        console.error("!!! Error POST /api/reuniones:", err);
+        res.status(500).json({ error: 'Error al crear reunión', details: err.message });
+    }
+});
+app.put('/api/reuniones/:id', async (req, res) => {
+    const id = req.params.id.trim();
+    const { titulo, tipo, fecha, hora, enlace, descripcion } = req.body;
+    try {
+        await pool.query(
+            `UPDATE reuniones SET titulo = $1, tipo = $2, fecha = $3, hora = $4, enlace = $5, descripcion = $6 WHERE id = $7`,
+            [titulo, tipo, fecha, hora || null, enlace || null, descripcion || null, id]
+        );
+        res.json({ success: true, message: 'Reunión actualizada' });
+    } catch (err) {
+        console.error("!!! Error PUT /api/reuniones:", err);
+        res.status(500).json({ error: 'Error al actualizar reunión' });
+    }
+});
+app.delete('/api/reuniones/:id', async (req, res) => {
+    const id = req.params.id.trim();
+    try {
+        await pool.query('DELETE FROM reuniones WHERE id = $1', [id]);
+        res.json({ success: true, message: 'Reunión eliminada' });
+    } catch (err) {
+        console.error("!!! Error DELETE /api/reuniones:", err);
+        res.status(500).json({ error: 'Error al eliminar reunión' });
     }
 });
 

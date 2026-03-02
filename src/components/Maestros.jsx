@@ -207,6 +207,10 @@ const Maestros = ({ onNavigate, onNewMaestro, onEditMaestro, onDeleteMaestro, is
                     <span className="material-symbols-outlined text-2xl">menu_book</span>
                     <p className="text-[10px] font-medium leading-normal">Lecciones</p>
                 </button>
+                <button className="flex flex-col items-center gap-1 text-charcoal/40 hover:text-charcoal transition-colors" onClick={() => onNavigate('reuniones')}>
+                    <span className="material-symbols-outlined text-2xl">event</span>
+                    <p className="text-[10px] font-medium leading-normal">Reuniones</p>
+                </button>
                 <button className="flex flex-col items-center gap-1 text-primary active" onClick={() => onNavigate('maestros')}>
                     <span className="material-symbols-outlined text-2xl fill-1">group</span>
                     <p className="text-[10px] font-medium leading-normal flex-1 font-black uppercase tracking-widest mt-1">Maestros</p>

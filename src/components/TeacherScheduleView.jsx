@@ -201,10 +201,21 @@ const TeacherScheduleView = ({ teacher, clases, onBack, onSelectClase, onNavigat
                                             <h4 className="text-lg font-black text-charcoal leading-tight">{clase.leccion.titulo}</h4>
                                         </div>
                                         <div className="flex gap-2">
+                                            {clase.tiene_pdf && (
+                                                <a
+                                                    href={`/api/programacion/${clase.id}/pdf`}
+                                                    download={clase.pdf_nombre}
+                                                    onClick={(e) => e.stopPropagation()}
+                                                    className="size-10 bg-charcoal/5 flex items-center justify-center rounded-2xl hover:bg-charcoal hover:text-white transition-all text-charcoal"
+                                                    title={`Descargar Material: ${clase.pdf_nombre}`}
+                                                >
+                                                    <span className="material-symbols-outlined !text-[20px]">download</span>
+                                                </a>
+                                            )}
                                             <button
                                                 onClick={(e) => exportLessonPDF(e, clase)}
                                                 className="size-10 bg-red-50 text-red-500 rounded-2xl flex items-center justify-center hover:bg-red-500 hover:text-white transition-all shadow-sm"
-                                                title="Descargar Ficha PDF"
+                                                title="Descargar Ficha de Lección (Resumen)"
                                             >
                                                 <span className="material-symbols-outlined !text-xl">picture_as_pdf</span>
                                             </button>
@@ -265,6 +276,14 @@ const TeacherScheduleView = ({ teacher, clases, onBack, onSelectClase, onNavigat
                     >
                         <span className="material-symbols-outlined !text-2xl">home</span>
                         <span className="text-[8px] font-black uppercase tracking-widest">Inicio</span>
+                    </button>
+                    <div className="w-px h-8 bg-gray-100 self-center"></div>
+                    <button
+                        onClick={() => onNavigate('reuniones')}
+                        className="flex flex-col items-center gap-1 p-3 px-6 text-charcoal/40 hover:text-primary transition-all active:scale-90"
+                    >
+                        <span className="material-symbols-outlined !text-2xl">event</span>
+                        <span className="text-[8px] font-black uppercase tracking-widest">Reuniones</span>
                     </button>
                     <div className="w-px h-8 bg-gray-100 self-center"></div>
                     <button

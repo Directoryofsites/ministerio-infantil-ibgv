@@ -189,7 +189,7 @@ const EstudianteForm = ({ onClose, onSaveSuccess, estudianteToEdit }) => {
                                             </span>
                                         </div>
                                         <div>
-                                            <p className="font-bold text-charcoal text-sm">{record.fecha ? new Date(record.fecha).toLocaleDateString('es-ES', { day: '2-digit', month: 'short' }) : 'Sin fecha'}</p>
+                                            <p className="font-bold text-charcoal text-sm">{record.fecha ? new Date(record.fecha).toLocaleDateString('es-ES', { day: '2-digit', month: 'short', timeZone: 'UTC' }) : 'Sin fecha'}</p>
                                             <p className="text-xs font-semibold text-silver">{record.leccion_titulo || 'Clase General'}</p>
                                         </div>
                                     </div>

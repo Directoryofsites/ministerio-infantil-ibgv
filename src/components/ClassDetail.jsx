@@ -1,7 +1,49 @@
 import React, { useState, useEffect } from 'react';
 
-const ClassDetail = ({ clase, onClose, onEdit, onDelete, onDuplicate, isAdmin }) => {
+const ClassDetail = ({ clase, onClose, onEdit, onDelete, onDuplicate, isAdmin, onRefresh }) => {
     const [asistencia, setAsistencia] = useState([]);
+    const [isUploading, setIsUploading] = useState(false);
+
+    const handleFileUpload = async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        if (file.type !== 'application/pdf') return alert('Solo se permiten archivos PDF');
+        if (file.size > 5 * 1024 * 1024) return alert('El archivo es muy pesado. Máximo 5MB permitido.');
+
+        setIsUploading(true);
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = async () => {
+            try {
+                const res = await fetch(`/api/programacion/${clase.id}/pdf`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ pdf_base64: reader.result, pdf_nombre: file.name })
+                });
+                if (res.ok) {
+                    if (onRefresh) onRefresh();
+                    onClose();
+                } else alert('Error al subir archivo');
+            } catch (err) {
+                console.error(err);
+            } finally {
+                setIsUploading(false);
+            }
+        };
+    };
+
+    const handleDeletePdf = async () => {
+        if (!window.confirm("¿Seguro que deseas eliminar el PDF de esta lección?")) return;
+        try {
+            const res = await fetch(`/api/programacion/${clase.id}/pdf`, { method: 'DELETE' });
+            if (res.ok) {
+                if (onRefresh) onRefresh();
+                onClose();
+            }
+        } catch (err) {
+            console.error(err);
+        }
+    };
 
     useEffect(() => {
         if (clase?.id) {
@@ -112,6 +154,57 @@ const ClassDetail = ({ clase, onClose, onEdit, onDelete, onDuplicate, isAdmin })
                             </div>
                         </div>
 
+                    </div>
+
+                    {/* Panel C: Material Adjunto (PDF) */}
+                    <div className="mt-10 space-y-4">
+                        <div className="flex items-center space-x-3 text-red-600">
+                            <h3 className="text-lg font-bold uppercase tracking-tight">Material Adjunto</h3>
+                            <div className="h-px flex-1 bg-red-100"></div>
+                        </div>
+
+                        {clase.tiene_pdf ? (
+                            <div className="bg-red-50 p-6 rounded-2xl border border-red-100 flex items-center justify-between">
+                                <div className="flex items-center gap-4">
+                                    <span className="material-symbols-outlined !text-4xl text-red-500">picture_as_pdf</span>
+                                    <div>
+                                        <p className="font-bold text-red-900">{clase.pdf_nombre}</p>
+                                        <p className="text-xs text-red-600/70 font-medium">Documento PDF Adjunto</p>
+                                    </div>
+                                </div>
+                                <div className="flex items-center gap-3">
+                                    <a
+                                        href={`/api/programacion/${clase.id}/pdf`}
+                                        download={clase.pdf_nombre}
+                                        className="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-xl shadow-lg shadow-red-600/20 transition-colors flex items-center gap-2"
+                                    >
+                                        <span className="material-symbols-outlined !text-lg">download</span>
+                                        Descargar
+                                    </a>
+                                    {isAdmin && (
+                                        <button onClick={handleDeletePdf} className="p-3 bg-white text-red-500 hover:bg-red-100 rounded-xl transition-colors border border-red-200">
+                                            <span className="material-symbols-outlined !text-lg">delete</span>
+                                        </button>
+                                    )}
+                                </div>
+                            </div>
+                        ) : (
+                            isAdmin ? (
+                                <div className="bg-bone p-6 rounded-2xl border-2 border-dashed border-gray-200 flex flex-col items-center justify-center text-center">
+                                    <span className="material-symbols-outlined !text-4xl text-silver mb-2">upload_file</span>
+                                    <p className="text-charcoal font-bold mb-1">Subir Material para la Lección</p>
+                                    <p className="text-silver text-xs mb-4">Solo archivos PDF (Máximo 5MB)</p>
+
+                                    <label className={`bg-charcoal hover:bg-black text-white font-bold py-3 px-6 rounded-xl transition-colors cursor-pointer flex items-center gap-2 ${isUploading ? 'opacity-50 pointer-events-none' : ''}`}>
+                                        <span className="material-symbols-outlined !text-lg">publish</span>
+                                        {isUploading ? 'Subiendo...' : 'Seleccionar PDF'}
+                                        <input type="file" accept=".pdf" className="hidden" onChange={handleFileUpload} disabled={isUploading} />
+                                    </label>
+                                </div>
+                            ) : (
+                                <p className="text-silver text-sm italic py-4">No hay material adjunto para esta lección.</p>
+                            )
+                        )}
                     </div>
 
                     {/* Footer del Modal: Maestros Asignados */}

@@ -191,6 +191,10 @@ const Calendario = ({ onNavigate, onNewClass, onSelectClase, clases }) => {
                     <span className="material-symbols-outlined text-2xl">menu_book</span>
                     <p className="text-[10px] font-medium leading-normal">Lecciones</p>
                 </button>
+                <button className="flex flex-col items-center gap-1 text-charcoal/40 hover:text-charcoal transition-colors" onClick={() => onNavigate('reuniones')}>
+                    <span className="material-symbols-outlined text-2xl">event</span>
+                    <p className="text-[10px] font-medium leading-normal">Reuniones</p>
+                </button>
                 <button className="flex flex-col items-center gap-1 text-charcoal/40 hover:text-charcoal transition-colors" onClick={() => onNavigate('maestros')}>
                     <span className="material-symbols-outlined text-2xl">group</span>
                     <p className="text-[10px] font-medium leading-normal">Maestros</p>
