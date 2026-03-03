@@ -1,29 +1,9 @@
 import React, { useState, useEffect } from 'react';
 
-const Maestros = ({ onNavigate, onNewMaestro, onEditMaestro, onDeleteMaestro, isAdmin }) => {
-    const [maestros, setMaestros] = useState([]);
-    const [loading, setLoading] = useState(true);
+const Maestros = ({ onNavigate, onNewMaestro, onEditMaestro, onDeleteMaestro, isAdmin, maestros, loading }) => {
     const [activeMenu, setActiveMenu] = useState(null);
     const [searchQuery, setSearchQuery] = useState('');
     const [activeFilter, setActiveFilter] = useState('Todos');
-
-    useEffect(() => {
-        const fetchMaestros = async () => {
-            try {
-                const res = await fetch('/api/ministerio');
-                const data = await res.json();
-                if (data.ministerio_infantil?.maestros) {
-                    setMaestros(data.ministerio_infantil.maestros);
-                }
-            } catch (err) {
-                console.error("Error cargando maestros:", err);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchMaestros();
-    }, []);
 
     const formatSpec = (spec) => {
         if (!spec) return "Sin asignar";

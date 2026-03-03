@@ -34,6 +34,7 @@ const initDb = async () => {
         // Migration step: Make sure existing db has the rol and pin columns
         await pool.query(`ALTER TABLE maestros ADD COLUMN IF NOT EXISTS rol VARCHAR(20) DEFAULT 'Invitado'`);
         await pool.query(`ALTER TABLE maestros ADD COLUMN IF NOT EXISTS pin VARCHAR(4)`);
+        await pool.query(`ALTER TABLE maestros ADD COLUMN IF NOT EXISTS foto_url TEXT`);
 
         await pool.query(`
             CREATE TABLE IF NOT EXISTS programacion (

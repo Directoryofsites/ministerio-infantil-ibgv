@@ -20,6 +20,7 @@ function App() {
   const [selectedTeacher, setSelectedTeacher] = useState(null);
   const [clases, setClases] = useState([]);
   const [reuniones, setReuniones] = useState([]);
+  const [maestros, setMaestros] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showClassForm, setShowClassForm] = useState(false);
   const [editingClase, setEditingClase] = useState(null);
@@ -52,6 +53,9 @@ function App() {
       }
       if (data.ministerio_infantil?.reuniones) {
         setReuniones(data.ministerio_infantil.reuniones);
+      }
+      if (data.ministerio_infantil?.maestros) {
+        setMaestros(data.ministerio_infantil.maestros);
       }
     } catch (err) {
       console.error("Error fetching data:", err);
@@ -246,7 +250,7 @@ function App() {
             if (window.confirm(`¿Seguro que deseas eliminar a ${m.nombre}?`)) {
               const res = await fetch(`/api/maestros/${m.id}`, { method: 'DELETE' });
               if (res.ok) {
-                // Maestros.jsx fetches its own data
+                fetchClases();
               } else {
                 const err = await res.json();
                 alert(err.error);
@@ -254,6 +258,8 @@ function App() {
             }
           }}
           isAdmin={isAdmin}
+          maestros={maestros}
+          loading={loading}
         />
       )}
 
