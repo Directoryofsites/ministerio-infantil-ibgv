@@ -124,16 +124,16 @@ const TeacherScheduleView = ({ teacher, clases, onBack, onSelectClase, onNavigat
                 >
                     <span className="material-symbols-outlined">arrow_back</span>
                 </button>
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-3 min-w-0">
                     <div className="size-10 rounded-full overflow-hidden border border-gray-100 shrink-0">
                         <img src={teacher.foto_url || getDummyImg(teacher.id)} alt={teacher.nombre} className="w-full h-full object-cover" />
                     </div>
-                    <div>
-                        <h1 className="text-sm font-black text-charcoal leading-none">{teacher.nombre}</h1>
-                        <p className="text-[10px] text-silver font-bold uppercase tracking-wider">Mi Programación</p>
+                    <div className="min-w-0">
+                        <h1 className="text-sm font-black text-charcoal leading-none truncate">{teacher.nombre}</h1>
+                        <p className="text-[10px] text-silver font-bold uppercase tracking-wider truncate">Mi Programación</p>
                     </div>
                 </div>
-                <div className="flex-1 flex justify-end gap-2">
+                <div className="flex-1 flex justify-end gap-2 shrink-0">
                     {teacher.rol === 'Administrador' && (
                         <button
                             onClick={() => onNavigate('dashboard')}
@@ -193,14 +193,14 @@ const TeacherScheduleView = ({ teacher, clases, onBack, onSelectClase, onNavigat
                                     onClick={() => onSelectClase(clase)}
                                     className="group relative bg-white p-5 rounded-3xl shadow-xl shadow-charcoal/5 border border-transparent hover:border-primary/20 transition-all cursor-pointer active:scale-[0.98]"
                                 >
-                                    <div className="flex justify-between items-start mb-4">
-                                        <div className="space-y-1">
+                                    <div className="flex flex-col sm:flex-row justify-between items-start gap-4 mb-4">
+                                        <div className="space-y-1 w-full">
                                             <p className="text-[10px] font-black text-primary uppercase tracking-widest">
                                                 {new Date(clase.fecha + 'T00:00:00').toLocaleDateString('es-ES', { day: 'numeric', weekday: 'long' })}
                                             </p>
-                                            <h4 className="text-lg font-black text-charcoal leading-tight">{clase.leccion.titulo}</h4>
+                                            <h4 className="text-lg font-black text-charcoal leading-tight pr-4">{clase.leccion.titulo}</h4>
                                         </div>
-                                        <div className="flex gap-2">
+                                        <div className="flex gap-2 shrink-0">
                                             {clase.tiene_pdf && (
                                                 <a
                                                     href={`/api/programacion/${clase.id}/pdf`}
@@ -225,9 +225,9 @@ const TeacherScheduleView = ({ teacher, clases, onBack, onSelectClase, onNavigat
                                         </div>
                                     </div>
 
-                                    <div className="flex items-center gap-2 mb-4">
+                                    <div className="flex flex-wrap items-center gap-2 mb-4">
                                         <div className="flex items-center gap-1.5 px-3 py-1 bg-bone rounded-full">
-                                            <span className="material-symbols-outlined !text-sm text-silver">groups</span>
+                                            <span className="material-symbols-outlined notranslate !text-sm text-silver">groups</span>
                                             <span className="text-[10px] font-bold text-charcoal/70 uppercase tracking-tighter">{getGroupLabel(clase)}</span>
                                         </div>
                                         <div className="flex items-center gap-1.5 px-3 py-1 bg-bone rounded-full">
