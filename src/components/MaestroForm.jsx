@@ -103,7 +103,7 @@ const MaestroForm = ({ onClose, onSaveSuccess, maestroToEdit }) => {
                         />
                         {!formData.foto_url && (
                             <div className="absolute inset-0 flex items-center justify-center bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity">
-                                <span className="material-symbols-outlined text-white text-sm whitespace-nowrap px-2">add_a_photo</span>
+                                <span className="material-symbols-outlined text-white text-sm whitespace-nowrap px-2 notranslate">add_a_photo</span>
                             </div>
                         )}
                     </div>

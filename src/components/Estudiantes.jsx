@@ -155,7 +155,7 @@ const Estudiantes = ({ estudiantes = [], onNavigate, onEditEstudiante, onNewEstu
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
                         <div className="size-10 rounded-xl bg-primary flex items-center justify-center text-white">
-                            <span className="material-symbols-outlined">school</span>
+                            <span className="material-symbols-outlined notranslate">school</span>
                         </div>
                         <div>
                             <h1 className="text-base font-extrabold tracking-tight text-charcoal">Alumnos</h1>
@@ -168,14 +168,14 @@ const Estudiantes = ({ estudiantes = [], onNavigate, onEditEstudiante, onNewEstu
                             className="size-10 bg-white border border-gray-100 text-charcoal/40 rounded-full flex items-center justify-center shadow-soft hover:bg-red-50 hover:text-red-500 transition-all active:scale-90"
                             title="Descargar PDF"
                         >
-                            <span className="material-symbols-outlined !text-xl">picture_as_pdf</span>
+                            <span className="material-symbols-outlined !text-xl notranslate">picture_as_pdf</span>
                         </button>
                         {isAdmin && (
                             <button
                                 onClick={onNewEstudiante}
                                 className="size-10 bg-primary text-white rounded-full flex items-center justify-center shadow-lg shadow-primary/30 active:scale-90 transition-transform"
                             >
-                                <span className="material-symbols-outlined">add</span>
+                                <span className="material-symbols-outlined notranslate">add</span>
                             </button>
                         )}
                     </div>
@@ -186,14 +186,14 @@ const Estudiantes = ({ estudiantes = [], onNavigate, onEditEstudiante, onNewEstu
                         onClick={() => setViewMode('lista')}
                         className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all ${viewMode === 'lista' ? 'bg-white text-primary shadow-sm' : 'text-charcoal/40'}`}
                     >
-                        <span className="material-symbols-outlined text-sm">list</span>
+                        <span className="material-symbols-outlined text-sm notranslate">list</span>
                         Lista Alumnos
                     </button>
                     <button
                         onClick={() => setViewMode('cumpleanos')}
                         className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all ${viewMode === 'cumpleanos' ? 'bg-white text-primary shadow-sm' : 'text-charcoal/40'}`}
                     >
-                        <span className="material-symbols-outlined text-sm">cake</span>
+                        <span className="material-symbols-outlined text-sm notranslate">cake</span>
                         Cumpleaños
                     </button>
                 </div>
@@ -203,7 +203,7 @@ const Estudiantes = ({ estudiantes = [], onNavigate, onEditEstudiante, onNewEstu
                 {viewMode === 'lista' ? (
                     <>
                         <div className="relative">
-                            <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-silver text-xl">search</span>
+                            <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-silver text-xl notranslate">search</span>
                             <input
                                 type="text"
                                 placeholder="Buscar alumno..."
@@ -247,7 +247,7 @@ const Estudiantes = ({ estudiantes = [], onNavigate, onEditEstudiante, onNewEstu
                                             </span>
                                             {estudiante.cumpleanos && (
                                                 <span className="text-[10px] text-silver font-bold flex items-center gap-1">
-                                                    <span className="material-symbols-outlined text-[12px]">cake</span>
+                                                    <span className="material-symbols-outlined text-[12px] notranslate">cake</span>
                                                     {estudiante.cumpleanos}
                                                 </span>
                                             )}
@@ -266,20 +266,20 @@ const Estudiantes = ({ estudiantes = [], onNavigate, onEditEstudiante, onNewEstu
                                                 className="size-10 rounded-full bg-red-50 text-red-400 flex items-center justify-center hover:bg-red-500 hover:text-white transition-all shadow-sm"
                                                 title="Eliminar"
                                             >
-                                                <span className="material-symbols-outlined !text-xl">delete</span>
+                                                <span className="material-symbols-outlined !text-xl notranslate">delete</span>
                                             </button>
                                         )}
                                         <button
                                             onClick={() => onEditEstudiante(estudiante)}
                                             className="size-10 rounded-full bg-bone text-charcoal/40 flex items-center justify-center hover:bg-primary/5 hover:text-primary transition-colors shadow-sm"
                                         >
-                                            <span className="material-symbols-outlined">edit</span>
+                                            <span className="material-symbols-outlined notranslate">edit</span>
                                         </button>
                                     </div>
                                 </div>
                             )) : (
                                 <div className="py-20 flex flex-col items-center justify-center text-silver">
-                                    <span className="material-symbols-outlined text-6xl mb-4">person_search</span>
+                                    <span className="material-symbols-outlined text-6xl mb-4 notranslate">person_search</span>
                                     <p className="font-bold">No se encontraron alumnos</p>
                                 </div>
                             )}
@@ -309,7 +309,7 @@ const Estudiantes = ({ estudiantes = [], onNavigate, onEditEstudiante, onNewEstu
                             {cumpleanosDelMes.length > 0 ? cumpleanosDelMes.map(estudiante => (
                                 <div key={estudiante.id} className="bg-white p-5 rounded-3xl border border-gray-100 shadow-soft flex items-center gap-5">
                                     <div className="size-14 rounded-2xl bg-primary/5 text-primary flex items-center justify-center shrink-0">
-                                        <span className="material-symbols-outlined !text-3xl">cake</span>
+                                        <span className="material-symbols-outlined !text-3xl notranslate">cake</span>
                                     </div>
                                     <div className="flex-1">
                                         <h3 className="font-extra-bold text-charcoal leading-tight">{estudiante.nombre}</h3>
@@ -319,7 +319,7 @@ const Estudiantes = ({ estudiantes = [], onNavigate, onEditEstudiante, onNewEstu
                                             </span>
                                             {estudiante.whatsapp_padres && (
                                                 <div className="flex items-center gap-1.5">
-                                                    <span className="material-symbols-outlined text-green-500 text-[16px]">call</span>
+                                                    <span className="material-symbols-outlined text-green-500 text-[16px] notranslate">call</span>
                                                     <span className="text-[11px] font-bold text-silver">
                                                         {estudiante.whatsapp_padres}
                                                     </span>
@@ -334,7 +334,7 @@ const Estudiantes = ({ estudiantes = [], onNavigate, onEditEstudiante, onNewEstu
                             )) : (
                                 <div className="py-20 flex flex-col items-center justify-center text-silver/40">
                                     <div className="size-20 rounded-full bg-bone flex items-center justify-center mb-4">
-                                        <span className="material-symbols-outlined text-4xl">celebration</span>
+                                        <span className="material-symbols-outlined text-4xl notranslate">celebration</span>
                                     </div>
                                     <p className="font-black uppercase tracking-widest text-[10px]">Sin cumpleaños este mes</p>
                                 </div>
@@ -349,7 +349,7 @@ const Estudiantes = ({ estudiantes = [], onNavigate, onEditEstudiante, onNewEstu
                     <div className="bg-white w-full max-w-sm rounded-[2rem] p-8 shadow-2xl animate-in zoom-in-95">
                         <div className="text-center space-y-4">
                             <div className="size-20 bg-red-50 text-red-500 rounded-full flex items-center justify-center mx-auto mb-2">
-                                <span className="material-symbols-outlined !text-4xl">warning</span>
+                                <span className="material-symbols-outlined !text-4xl notranslate">warning</span>
                             </div>
                             <h3 className="text-xl font-black text-charcoal">¿Eliminar Alumno?</h3>
                             <p className="text-silver font-medium">
@@ -377,19 +377,19 @@ const Estudiantes = ({ estudiantes = [], onNavigate, onEditEstudiante, onNewEstu
 
             <nav className="fixed bottom-0 left-0 right-0 glass-effect bg-white/90 border-t border-gray-100 pb-8 pt-3 px-6 flex justify-around items-center z-50">
                 <button className="flex flex-col items-center gap-1 text-charcoal/40 hover:text-charcoal transition-colors" onClick={() => onNavigate('teacher-selection')}>
-                    <span className="material-symbols-outlined !text-[26px]">home</span>
+                    <span className="material-symbols-outlined !text-[26px] notranslate">home</span>
                     <span className="text-[10px] font-bold uppercase tracking-widest">Inicio</span>
                 </button>
                 <button className="flex flex-col items-center gap-1 text-charcoal/40 hover:text-charcoal transition-colors" onClick={() => onNavigate('dashboard')}>
-                    <span className="material-symbols-outlined !text-[26px]">menu_book</span>
+                    <span className="material-symbols-outlined !text-[26px] notranslate">menu_book</span>
                     <span className="text-[10px] font-bold uppercase tracking-widest">Lecciones</span>
                 </button>
                 <button className="flex flex-col items-center gap-1 text-charcoal/40 hover:text-charcoal transition-colors" onClick={() => onNavigate('reuniones')}>
-                    <span className="material-symbols-outlined !text-[26px]">event</span>
+                    <span className="material-symbols-outlined !text-[26px] notranslate">event</span>
                     <span className="text-[10px] font-bold uppercase tracking-widest">Reuniones</span>
                 </button>
                 <button className="flex flex-col items-center gap-1 text-primary nav-indicator active">
-                    <span className="material-symbols-outlined !text-[26px] fill-1">school</span>
+                    <span className="material-symbols-outlined !text-[26px] fill-1 notranslate">school</span>
                     <span className="text-[10px] font-black uppercase tracking-widest">Alumnos</span>
                 </button>
             </nav>

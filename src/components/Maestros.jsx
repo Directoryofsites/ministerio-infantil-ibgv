@@ -66,7 +66,7 @@ const Maestros = ({ onNavigate, onNewMaestro, onEditMaestro, onDeleteMaestro, is
                         </div>
                     </div>
                     <button className="size-10 flex items-center justify-center rounded-full bg-bone text-charcoal/30" title="Sin notificaciones">
-                        <span className="material-symbols-outlined">notifications_off</span>
+                        <span className="material-symbols-outlined notranslate">notifications_off</span>
                     </button>
                 </div>
                 <div className="flex items-center justify-between">
@@ -76,7 +76,7 @@ const Maestros = ({ onNavigate, onNewMaestro, onEditMaestro, onDeleteMaestro, is
                             onClick={onNewMaestro}
                             className="bg-primary text-white px-4 py-2 rounded-lg text-sm font-semibold flex items-center gap-1 shadow-sm active:scale-95 transition-transform"
                         >
-                            <span className="material-symbols-outlined text-sm">add</span>
+                            <span className="material-symbols-outlined text-sm notranslate">add</span>
                             Nuevo Maestro
                         </button>
                     )}
@@ -86,7 +86,7 @@ const Maestros = ({ onNavigate, onNewMaestro, onEditMaestro, onDeleteMaestro, is
             {/* Search & Filter Section */}
             <div className="px-4 py-4 space-y-3">
                 <div className="relative">
-                    <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-silver">search</span>
+                    <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-silver notranslate">search</span>
                     <input
                         className="w-full pl-10 pr-4 py-3 bg-white border border-gray-100 rounded-xl text-sm focus:ring-2 focus:ring-primary/20 placeholder:text-silver shadow-sm text-charcoal"
                         placeholder="Buscar por nombre o grupo..."
@@ -154,7 +154,7 @@ const Maestros = ({ onNavigate, onNewMaestro, onEditMaestro, onDeleteMaestro, is
                                         }}
                                         className="text-silver hover:text-charcoal transition-colors p-1"
                                     >
-                                        <span className="material-symbols-outlined">more_vert</span>
+                                        <span className="material-symbols-outlined notranslate">more_vert</span>
                                     </button>
 
                                     {activeMenu === maestro.id && (
@@ -167,7 +167,7 @@ const Maestros = ({ onNavigate, onNewMaestro, onEditMaestro, onDeleteMaestro, is
                                                 }}
                                                 className="px-4 py-2 text-sm text-charcoal hover:bg-bone text-left flex items-center gap-2"
                                             >
-                                                <span className="material-symbols-outlined text-sm">edit</span>
+                                                <span className="material-symbols-outlined text-sm notranslate">edit</span>
                                                 Editar
                                             </button>
                                             <button
@@ -178,7 +178,7 @@ const Maestros = ({ onNavigate, onNewMaestro, onEditMaestro, onDeleteMaestro, is
                                                 }}
                                                 className="px-4 py-2 text-sm text-red-600 hover:bg-red-50 text-left flex items-center gap-2"
                                             >
-                                                <span className="material-symbols-outlined text-sm">delete</span>
+                                                <span className="material-symbols-outlined text-sm notranslate">delete</span>
                                                 Eliminar
                                             </button>
                                         </div>
@@ -189,7 +189,7 @@ const Maestros = ({ onNavigate, onNewMaestro, onEditMaestro, onDeleteMaestro, is
                     ))
                 ) : (
                     <div className="text-center p-12 bg-white rounded-2xl border border-gray-100 shadow-soft">
-                        <span className="material-symbols-outlined text-silver !text-4xl mb-2">person_search</span>
+                        <span className="material-symbols-outlined text-silver !text-4xl mb-2 notranslate">person_search</span>
                         <p className="text-silver text-sm">No se encontraron maestros con esos criterios.</p>
                     </div>
                 )}
@@ -200,19 +200,19 @@ const Maestros = ({ onNavigate, onNewMaestro, onEditMaestro, onDeleteMaestro, is
             {/* Bottom Navigation Bar */}
             <nav className="fixed bottom-0 left-0 right-0 glass-effect bg-white/90 border-t border-gray-100 pb-8 pt-3 px-6 flex justify-around items-center z-50">
                 <button className="flex flex-col items-center gap-1 text-charcoal/40 hover:text-charcoal transition-colors" onClick={() => onNavigate('teacher-selection')}>
-                    <span className="material-symbols-outlined text-2xl">home</span>
+                    <span className="material-symbols-outlined text-2xl notranslate">home</span>
                     <p className="text-[10px] font-medium leading-normal">Inicio</p>
                 </button>
                 <button className="flex flex-col items-center gap-1 text-charcoal/40 hover:text-charcoal transition-colors" onClick={() => onNavigate('dashboard')}>
-                    <span className="material-symbols-outlined text-2xl">menu_book</span>
+                    <span className="material-symbols-outlined text-2xl notranslate">menu_book</span>
                     <p className="text-[10px] font-medium leading-normal">Lecciones</p>
                 </button>
                 <button className="flex flex-col items-center gap-1 text-charcoal/40 hover:text-charcoal transition-colors" onClick={() => onNavigate('reuniones')}>
-                    <span className="material-symbols-outlined text-2xl">event</span>
+                    <span className="material-symbols-outlined text-2xl notranslate">event</span>
                     <p className="text-[10px] font-medium leading-normal">Reuniones</p>
                 </button>
                 <button className="flex flex-col items-center gap-1 text-primary active" onClick={() => onNavigate('maestros')}>
-                    <span className="material-symbols-outlined text-2xl fill-1">group</span>
+                    <span className="material-symbols-outlined text-2xl fill-1 notranslate">group</span>
                     <p className="text-[10px] font-medium leading-normal flex-1 font-black uppercase tracking-widest mt-1">Maestros</p>
                 </button>
             </nav>

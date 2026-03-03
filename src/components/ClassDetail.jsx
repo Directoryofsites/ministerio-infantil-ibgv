@@ -74,7 +74,7 @@ const ClassDetail = ({ clase, onClose, onEdit, onDelete, onDuplicate, isAdmin, o
                                     className="p-2 rounded-full bg-bone hover:bg-blue-100 hover:text-blue-600 transition-colors"
                                     title="Editar Clase"
                                 >
-                                    <span className="material-symbols-outlined text-[20px]">edit</span>
+                                    <span className="material-symbols-outlined text-[20px] notranslate">edit</span>
                                 </button>
                             )}
                             {onDelete && (
@@ -83,7 +83,7 @@ const ClassDetail = ({ clase, onClose, onEdit, onDelete, onDuplicate, isAdmin, o
                                     className="p-2 rounded-full bg-bone hover:bg-red-100 hover:text-red-600 transition-colors"
                                     title="Eliminar Clase"
                                 >
-                                    <span className="material-symbols-outlined text-[20px]">delete</span>
+                                    <span className="material-symbols-outlined text-[20px] notranslate">delete</span>
                                 </button>
                             )}
                             {onDuplicate && (
@@ -92,7 +92,7 @@ const ClassDetail = ({ clase, onClose, onEdit, onDelete, onDuplicate, isAdmin, o
                                     className="p-2 rounded-full bg-bone hover:bg-green-100 hover:text-green-600 transition-colors"
                                     title="Duplicar / Clonar"
                                 >
-                                    <span className="material-symbols-outlined text-[20px]">content_copy</span>
+                                    <span className="material-symbols-outlined text-[20px] notranslate">content_copy</span>
                                 </button>
                             )}
                         </>
@@ -166,7 +166,7 @@ const ClassDetail = ({ clase, onClose, onEdit, onDelete, onDuplicate, isAdmin, o
                         {clase.tiene_pdf ? (
                             <div className="bg-red-50 p-6 rounded-2xl border border-red-100 flex items-center justify-between">
                                 <div className="flex items-center gap-4">
-                                    <span className="material-symbols-outlined !text-4xl text-red-500">picture_as_pdf</span>
+                                    <span className="material-symbols-outlined !text-4xl text-red-500 notranslate">picture_as_pdf</span>
                                     <div>
                                         <p className="font-bold text-red-900">{clase.pdf_nombre}</p>
                                         <p className="text-xs text-red-600/70 font-medium">Documento PDF Adjunto</p>
@@ -178,12 +178,12 @@ const ClassDetail = ({ clase, onClose, onEdit, onDelete, onDuplicate, isAdmin, o
                                         download={clase.pdf_nombre}
                                         className="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-xl shadow-lg shadow-red-600/20 transition-colors flex items-center gap-2"
                                     >
-                                        <span className="material-symbols-outlined !text-lg">download</span>
+                                        <span className="material-symbols-outlined !text-lg notranslate">download</span>
                                         Descargar
                                     </a>
                                     {isAdmin && (
                                         <button onClick={handleDeletePdf} className="p-3 bg-white text-red-500 hover:bg-red-100 rounded-xl transition-colors border border-red-200">
-                                            <span className="material-symbols-outlined !text-lg">delete</span>
+                                            <span className="material-symbols-outlined !text-lg notranslate">delete</span>
                                         </button>
                                     )}
                                 </div>
@@ -191,12 +191,12 @@ const ClassDetail = ({ clase, onClose, onEdit, onDelete, onDuplicate, isAdmin, o
                         ) : (
                             isAdmin ? (
                                 <div className="bg-bone p-6 rounded-2xl border-2 border-dashed border-gray-200 flex flex-col items-center justify-center text-center">
-                                    <span className="material-symbols-outlined !text-4xl text-silver mb-2">upload_file</span>
+                                    <span className="material-symbols-outlined !text-4xl text-silver mb-2 notranslate">upload_file</span>
                                     <p className="text-charcoal font-bold mb-1">Subir Material para la Lección</p>
                                     <p className="text-silver text-xs mb-4">Solo archivos PDF (Máximo 5MB)</p>
 
                                     <label className={`bg-charcoal hover:bg-black text-white font-bold py-3 px-6 rounded-xl transition-colors cursor-pointer flex items-center gap-2 ${isUploading ? 'opacity-50 pointer-events-none' : ''}`}>
-                                        <span className="material-symbols-outlined !text-lg">publish</span>
+                                        <span className="material-symbols-outlined !text-lg notranslate">publish</span>
                                         {isUploading ? 'Subiendo...' : 'Seleccionar PDF'}
                                         <input type="file" accept=".pdf" className="hidden" onChange={handleFileUpload} disabled={isUploading} />
                                     </label>

@@ -105,7 +105,7 @@ const AsistenciaView = ({ teacher, clases, estudiantes, onBack, onNavigate }) =>
         <div className="relative min-h-screen w-full bg-bone pt-24 pb-32">
             <header className="fixed top-0 left-0 right-0 z-50 glass-effect bg-white/80 border-b border-gray-100 p-4 px-6 flex items-center gap-4">
                 <button onClick={onBack} className="size-10 flex items-center justify-center rounded-full bg-bone text-charcoal/60 hover:text-primary transition-colors">
-                    <span className="material-symbols-outlined">arrow_back</span>
+                    <span className="material-symbols-outlined notranslate">arrow_back</span>
                 </button>
                 <div className="flex-1">
                     <h1 className="text-sm font-black text-charcoal leading-none">Control de Asistencia</h1>
@@ -161,7 +161,7 @@ const AsistenciaView = ({ teacher, clases, estudiantes, onBack, onNavigate }) =>
 
                     {loading ? (
                         <div className="py-20 text-center animate-pulse">
-                            <span className="material-symbols-outlined text-4xl text-gray-200 spin">sync</span>
+                            <span className="material-symbols-outlined text-4xl text-gray-200 spin notranslate">sync</span>
                         </div>
                     ) : (
                         <div className="grid gap-3">
@@ -185,14 +185,14 @@ const AsistenciaView = ({ teacher, clases, estudiantes, onBack, onNavigate }) =>
                                     </div>
                                     <div className={`size-8 rounded-full flex items-center justify-center transition-all ${asistenciaData[est.id] ? 'bg-primary text-white scale-110' : 'bg-bone text-transparent'
                                         }`}>
-                                        <span className="material-symbols-outlined !text-xl">check_bold</span>
+                                        <span className="material-symbols-outlined !text-xl notranslate">check_bold</span>
                                     </div>
                                 </div>
                             ))}
 
                             {filteredEstudiantes.length === 0 && selectedGroup && (
                                 <div className="py-20 text-center bg-white/50 rounded-[3rem] border-2 border-dashed border-gray-100">
-                                    <span className="material-symbols-outlined !text-5xl text-gray-200 mb-2">person_off</span>
+                                    <span className="material-symbols-outlined !text-5xl text-gray-200 mb-2 notranslate">person_off</span>
                                     <p className="text-silver font-bold uppercase tracking-widest text-[10px]">No hay alumnos registrados</p>
                                     <p className="text-[9px] text-silver/60">en este grupo</p>
                                 </div>
@@ -210,10 +210,10 @@ const AsistenciaView = ({ teacher, clases, estudiantes, onBack, onNavigate }) =>
                             className="w-full h-16 bg-primary text-white font-black rounded-3xl shadow-xl shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-3 disabled:opacity-50"
                         >
                             {saving ? (
-                                <span className="material-symbols-outlined spin">sync</span>
+                                <span className="material-symbols-outlined spin notranslate">sync</span>
                             ) : (
                                 <>
-                                    <span className="material-symbols-outlined">save</span>
+                                    <span className="material-symbols-outlined notranslate">save</span>
                                     GUARDAR ASISTENCIA
                                 </>
                             )}

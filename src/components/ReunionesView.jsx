@@ -98,7 +98,7 @@ const ReunionesView = ({ reuniones = [], onNavigate, isAdmin, selectedTeacher, o
             <div className="flex flex-col min-h-screen bg-bone w-full max-w-md mx-auto fade-in">
                 <header className="flex items-center gap-3 p-4 bg-white shadow-soft sticky top-0 z-10 border-b border-gray-100">
                     <button onClick={() => setShowForm(false)} className="size-10 flex items-center justify-center rounded-full bg-bone text-charcoal/60 hover:text-charcoal transition-colors">
-                        <span className="material-symbols-outlined">arrow_back</span>
+                        <span className="material-symbols-outlined notranslate">arrow_back</span>
                     </button>
                     <div>
                         <h2 className="text-lg font-black text-charcoal">{isEditing ? 'Editar Reunión' : 'Nueva Reunión'}</h2>
@@ -161,7 +161,7 @@ const ReunionesView = ({ reuniones = [], onNavigate, isAdmin, selectedTeacher, o
                         onClick={resetForm}
                         className="bg-primary hover:bg-[#a6191e] text-white size-12 rounded-full flex items-center justify-center shadow-lg shadow-primary/30 transition-transform active:scale-95"
                     >
-                        <span className="material-symbols-outlined text-xl">event_available</span>
+                        <span className="material-symbols-outlined text-xl notranslate">event_available</span>
                     </button>
                 )}
             </header>
@@ -185,7 +185,7 @@ const ReunionesView = ({ reuniones = [], onNavigate, isAdmin, selectedTeacher, o
                 <div className="space-y-4">
                     {sortedReuniones.length === 0 ? (
                         <div className="text-center p-8 bg-white rounded-2xl border border-gray-100 shadow-soft">
-                            <span className="material-symbols-outlined text-4xl text-silver mb-3 opacity-50">event_busy</span>
+                            <span className="material-symbols-outlined text-4xl text-silver mb-3 opacity-50 notranslate">event_busy</span>
                             <p className="text-charcoal font-bold text-sm">No hay eventos programados.</p>
                             <p className="text-silver text-xs mt-1">Las reuniones futuras aparecerán aquí.</p>
                         </div>
@@ -203,7 +203,7 @@ const ReunionesView = ({ reuniones = [], onNavigate, isAdmin, selectedTeacher, o
                                 <div key={reunion.id} className="bg-white rounded-2xl p-5 border border-gray-100 shadow-soft relative overflow-hidden group hover:shadow-lg transition-all cursor-default">
                                     {/* Icon Background */}
                                     <div className="absolute -right-6 -bottom-6 opacity-[0.03] rotate-12 pointer-events-none">
-                                        <span className="material-symbols-outlined !text-[120px] text-charcoal">
+                                        <span className="material-symbols-outlined !text-[120px] text-charcoal notranslate">
                                             {reunion.tipo === 'Virtual' ? 'devices' : 'groups'}
                                         </span>
                                     </div>
@@ -216,10 +216,10 @@ const ReunionesView = ({ reuniones = [], onNavigate, isAdmin, selectedTeacher, o
                                         {canManage && (
                                             <div className="flex gap-1 -mr-2 -mt-2">
                                                 <button onClick={() => handleEdit(reunion)} className="text-silver hover:text-blue-500 transition-colors p-2" title="Editar reunión">
-                                                    <span className="material-symbols-outlined !text-lg text-blue-500">edit</span>
+                                                    <span className="material-symbols-outlined !text-lg text-blue-500 notranslate">edit</span>
                                                 </button>
                                                 <button onClick={() => handleDelete(reunion.id)} className="text-silver hover:text-red-500 transition-colors p-2" title="Eliminar reunión">
-                                                    <span className="material-symbols-outlined !text-lg text-red-700">delete</span>
+                                                    <span className="material-symbols-outlined !text-lg text-red-700 notranslate">delete</span>
                                                 </button>
                                             </div>
                                         )}
@@ -227,7 +227,7 @@ const ReunionesView = ({ reuniones = [], onNavigate, isAdmin, selectedTeacher, o
 
                                     {reunion.hora && (
                                         <div className="flex items-center gap-2 text-silver mb-2 relative z-10">
-                                            <span className="material-symbols-outlined !text-[16px]">schedule</span>
+                                            <span className="material-symbols-outlined !text-[16px] notranslate">schedule</span>
                                             <p className="text-sm font-medium pr-1 border-r border-gray-200">Hora:</p>
                                             <p className="text-sm font-bold text-charcoal">{reunion.hora}</p>
                                         </div>
@@ -246,7 +246,7 @@ const ReunionesView = ({ reuniones = [], onNavigate, isAdmin, selectedTeacher, o
                                             rel="noopener noreferrer"
                                             className="w-full mt-2 py-3 px-4 bg-primary/10 hover:bg-primary/20 text-primary font-bold rounded-xl flex items-center justify-center gap-2 transition-colors relative z-10"
                                         >
-                                            <span className="material-symbols-outlined !text-[18px]">videocam</span>
+                                            <span className="material-symbols-outlined !text-[18px] notranslate">videocam</span>
                                             Unirme a la Videollamada
                                         </a>
                                     )}
@@ -260,19 +260,19 @@ const ReunionesView = ({ reuniones = [], onNavigate, isAdmin, selectedTeacher, o
             {/* BOTTOM NAV */}
             <nav className="fixed bottom-0 left-0 right-0 glass-effect bg-white/90 border-t border-gray-100 pb-8 pt-3 px-6 flex justify-around items-center z-50">
                 <button className="flex flex-col items-center gap-1 text-charcoal/40 hover:text-primary transition-colors" onClick={() => onNavigate('teacher-selection')}>
-                    <span className="material-symbols-outlined !text-[26px]">home</span>
+                    <span className="material-symbols-outlined !text-[26px] notranslate">home</span>
                     <span className="text-[10px] font-bold uppercase tracking-widest">Inicio</span>
                 </button>
                 <button className="flex flex-col items-center gap-1 text-charcoal/40 hover:text-charcoal transition-colors" onClick={() => onNavigate('dashboard')}>
-                    <span className="material-symbols-outlined !text-[26px]">menu_book</span>
+                    <span className="material-symbols-outlined !text-[26px] notranslate">menu_book</span>
                     <span className="text-[10px] font-bold uppercase tracking-widest">Lecciones</span>
                 </button>
                 <button className="flex flex-col items-center gap-1 text-primary nav-indicator active">
-                    <span className="material-symbols-outlined !text-[26px] fill-1">event</span>
+                    <span className="material-symbols-outlined !text-[26px] fill-1 notranslate">event</span>
                     <span className="text-[10px] font-black uppercase tracking-widest">Reuniones</span>
                 </button>
                 <button className="flex flex-col items-center gap-1 text-charcoal/40 hover:text-charcoal transition-colors" onClick={() => onNavigate('estudiantes')}>
-                    <span className="material-symbols-outlined !text-[26px]">school</span>
+                    <span className="material-symbols-outlined !text-[26px] notranslate">school</span>
                     <span className="text-[10px] font-bold uppercase tracking-widest">Alumnos</span>
                 </button>
             </nav>

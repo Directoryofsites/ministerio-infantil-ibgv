@@ -79,7 +79,7 @@ const EstudianteForm = ({ onClose, onSaveSuccess, estudianteToEdit }) => {
         <div className="relative flex min-h-screen w-full flex-col bg-white max-w-md mx-auto fade-in animate-in pb-28">
             <header className="flex items-center gap-3 p-4 sticky top-0 z-10 bg-white border-b border-gray-100 shadow-sm">
                 <button onClick={onClose} className="size-10 flex items-center justify-center rounded-full bg-bone text-charcoal/60 hover:text-charcoal">
-                    <span className="material-symbols-outlined">arrow_back</span>
+                    <span className="material-symbols-outlined notranslate">arrow_back</span>
                 </button>
                 <div className="flex-1">
                     <h2 className="text-lg font-black text-charcoal">{estudianteToEdit ? 'Perfil del Alumno' : 'Nueva Hoja de Vida'}</h2>
@@ -107,7 +107,7 @@ const EstudianteForm = ({ onClose, onSaveSuccess, estudianteToEdit }) => {
             {activeTab === 'datos' ? (
                 <form onSubmit={handleSubmit} className="p-6 space-y-6 animate-in slide-in-from-left-4 duration-300">
                     <div className="flex flex-col items-center justify-center py-4 bg-primary/5 rounded-2xl border-2 border-dashed border-primary/20">
-                        <span className="material-symbols-outlined text-primary text-5xl mb-2">person</span>
+                        <span className="material-symbols-outlined text-primary text-5xl mb-2 notranslate">person</span>
                         <p className="text-primary font-bold text-sm tracking-tight text-center px-4">Información Personal del Estudiante</p>
                     </div>
 
@@ -174,7 +174,7 @@ const EstudianteForm = ({ onClose, onSaveSuccess, estudianteToEdit }) => {
 
                     {asistenciaFiltrada.length === 0 ? (
                         <div className="flex flex-col items-center justify-center py-12 text-center">
-                            <span className="material-symbols-outlined text-5xl text-silver mb-4 opacity-50">event_busy</span>
+                            <span className="material-symbols-outlined text-5xl text-silver mb-4 opacity-50 notranslate">event_busy</span>
                             <p className="text-charcoal font-bold">No hay clases registradas</p>
                             <p className="text-sm text-silver mt-1">Tu estudiante no tiene registro en el mes seleccionado.</p>
                         </div>
@@ -184,7 +184,7 @@ const EstudianteForm = ({ onClose, onSaveSuccess, estudianteToEdit }) => {
                                 <div key={index} className="flex items-center justify-between p-4 rounded-2xl bg-white border border-gray-100 shadow-soft">
                                     <div className="flex items-center gap-4">
                                         <div className={`size-10 rounded-full flex items-center justify-center ${record.presente ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600'}`}>
-                                            <span className="material-symbols-outlined text-xl">
+                                            <span className="material-symbols-outlined text-xl notranslate">
                                                 {record.presente ? 'check_circle' : 'cancel'}
                                             </span>
                                         </div>

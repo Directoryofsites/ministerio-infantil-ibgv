@@ -98,11 +98,11 @@ const TeacherSelectionView = ({ onSelectTeacher, onLoginClick, isAdmin, onLogout
 
                 {isAdmin ? (
                     <button onClick={onLogout} className="size-10 flex items-center justify-center rounded-full bg-primary/10 text-primary border border-primary/20">
-                        <span className="material-symbols-outlined !text-xl">logout</span>
+                        <span className="material-symbols-outlined !text-xl notranslate">logout</span>
                     </button>
                 ) : (
                     <button onClick={onLoginClick} className="size-10 flex items-center justify-center rounded-full bg-white text-charcoal/30 border border-gray-100 shadow-sm">
-                        <span className="material-symbols-outlined !text-xl">admin_panel_settings</span>
+                        <span className="material-symbols-outlined !text-xl notranslate">admin_panel_settings</span>
                     </button>
                 )}
             </header>
@@ -115,7 +115,7 @@ const TeacherSelectionView = ({ onSelectTeacher, onLoginClick, isAdmin, onLogout
 
                 {/* Buscador */}
                 <div className="relative group">
-                    <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-silver transition-colors group-focus-within:text-primary">search</span>
+                    <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-silver transition-colors group-focus-within:text-primary notranslate">search</span>
                     <input
                         type="text"
                         placeholder="Busca tu nombre..."
@@ -152,7 +152,7 @@ const TeacherSelectionView = ({ onSelectTeacher, onLoginClick, isAdmin, onLogout
                                 <div className="size-1.5 rounded-full bg-primary/20 group-hover:bg-primary transition-colors"></div>
 
                                 <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
-                                    <span className="material-symbols-outlined text-primary !text-lg">arrow_forward</span>
+                                    <span className="material-symbols-outlined text-primary !text-lg notranslate">arrow_forward</span>
                                 </div>
                             </button>
                         ))}
@@ -168,7 +168,7 @@ const TeacherSelectionView = ({ onSelectTeacher, onLoginClick, isAdmin, onLogout
                             onClick={() => setSelectedAdmin(null)}
                             className="absolute top-4 right-4 size-8 flex items-center justify-center rounded-full bg-bone text-charcoal/40 hover:text-red-500 transition-colors"
                         >
-                            <span className="material-symbols-outlined !text-lg">close</span>
+                            <span className="material-symbols-outlined !text-lg notranslate">close</span>
                         </button>
 
                         <div className="flex flex-col items-center text-center space-y-4 pt-2">

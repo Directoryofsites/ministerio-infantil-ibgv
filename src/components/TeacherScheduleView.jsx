@@ -122,7 +122,7 @@ const TeacherScheduleView = ({ teacher, clases, onBack, onSelectClase, onNavigat
                     onClick={onBack}
                     className="size-10 flex items-center justify-center rounded-full bg-bone text-charcoal/60 hover:text-primary transition-colors"
                 >
-                    <span className="material-symbols-outlined">arrow_back</span>
+                    <span className="material-symbols-outlined notranslate">arrow_back</span>
                 </button>
                 <div className="flex items-center gap-3 min-w-0">
                     <div className="size-10 rounded-full overflow-hidden border border-gray-100 shrink-0">
@@ -140,7 +140,7 @@ const TeacherScheduleView = ({ teacher, clases, onBack, onSelectClase, onNavigat
                             className="flex items-center gap-1.5 px-3 py-2 bg-charcoal text-white rounded-full shadow-lg shadow-charcoal/20 active:scale-95 transition-all"
                             title="Panel de Control General"
                         >
-                            <span className="material-symbols-outlined !text-lg">admin_panel_settings</span>
+                            <span className="material-symbols-outlined !text-lg notranslate">admin_panel_settings</span>
                             <span className="text-[10px] font-black uppercase tracking-widest hidden sm:inline">Panel</span>
                         </button>
                     )}
@@ -148,7 +148,7 @@ const TeacherScheduleView = ({ teacher, clases, onBack, onSelectClase, onNavigat
                         onClick={() => onNavigate('asistencia')}
                         className="flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-full shadow-lg shadow-primary/20 active:scale-95 transition-all"
                     >
-                        <span className="material-symbols-outlined !text-lg">how_to_reg</span>
+                        <span className="material-symbols-outlined !text-lg notranslate">how_to_reg</span>
                         <span className="text-[10px] font-black uppercase tracking-widest hidden sm:inline">Asistencia</span>
                     </button>
                 </div>
@@ -209,7 +209,7 @@ const TeacherScheduleView = ({ teacher, clases, onBack, onSelectClase, onNavigat
                                                     className="size-10 bg-charcoal/5 flex items-center justify-center rounded-2xl hover:bg-charcoal hover:text-white transition-all text-charcoal"
                                                     title={`Descargar Material: ${clase.pdf_nombre}`}
                                                 >
-                                                    <span className="material-symbols-outlined !text-[20px]">download</span>
+                                                    <span className="material-symbols-outlined !text-[20px] notranslate">download</span>
                                                 </a>
                                             )}
                                             <button
@@ -217,10 +217,10 @@ const TeacherScheduleView = ({ teacher, clases, onBack, onSelectClase, onNavigat
                                                 className="size-10 bg-red-50 text-red-500 rounded-2xl flex items-center justify-center hover:bg-red-500 hover:text-white transition-all shadow-sm"
                                                 title="Descargar Ficha de Lección (Resumen)"
                                             >
-                                                <span className="material-symbols-outlined !text-xl">picture_as_pdf</span>
+                                                <span className="material-symbols-outlined !text-xl notranslate">picture_as_pdf</span>
                                             </button>
                                             <div className="size-10 bg-primary/5 rounded-2xl flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors">
-                                                <span className="material-symbols-outlined !text-xl">calendar_today</span>
+                                                <span className="material-symbols-outlined !text-xl notranslate">calendar_today</span>
                                             </div>
                                         </div>
                                     </div>
@@ -231,14 +231,14 @@ const TeacherScheduleView = ({ teacher, clases, onBack, onSelectClase, onNavigat
                                             <span className="text-[10px] font-bold text-charcoal/70 uppercase tracking-tighter">{getGroupLabel(clase)}</span>
                                         </div>
                                         <div className="flex items-center gap-1.5 px-3 py-1 bg-bone rounded-full">
-                                            <span className="material-symbols-outlined !text-sm text-silver">menu_book</span>
+                                            <span className="material-symbols-outlined !text-sm text-silver notranslate">menu_book</span>
                                             <span className="text-[10px] font-bold text-charcoal/70 truncate max-w-[120px]">{clase.leccion.pasaje_biblico}</span>
                                         </div>
                                     </div>
 
                                     <div className="pt-4 border-t border-gray-50 flex items-center justify-between">
                                         <span className="text-[10px] font-bold text-silver uppercase tracking-widest group-hover:text-primary transition-colors">Ver detalles completos</span>
-                                        <span className="material-symbols-outlined text-primary scale-0 group-hover:scale-100 transition-transform">chevron_right</span>
+                                        <span className="material-symbols-outlined text-primary scale-0 group-hover:scale-100 transition-transform notranslate">chevron_right</span>
                                     </div>
 
                                     {/* OBSERVACIONES BUTTON */}
@@ -250,7 +250,7 @@ const TeacherScheduleView = ({ teacher, clases, onBack, onSelectClase, onNavigat
                                             }}
                                             className="flex items-center justify-center gap-2 w-full py-3 px-4 rounded-xl bg-primary/5 text-primary text-[10px] font-black uppercase tracking-widest hover:bg-primary/10 transition-colors border border-primary/5 z-10"
                                         >
-                                            <span className="material-symbols-outlined !text-sm">edit_note</span>
+                                            <span className="material-symbols-outlined !text-sm notranslate">edit_note</span>
                                             Añadir Observaciones
                                         </button>
                                     </div>
@@ -259,7 +259,7 @@ const TeacherScheduleView = ({ teacher, clases, onBack, onSelectClase, onNavigat
                         </div>
                     ) : (
                         <div className="text-center py-20 bg-white/50 rounded-[3rem] border-2 border-dashed border-gray-100">
-                            <span className="material-symbols-outlined !text-[64px] text-gray-200 mb-4">event_busy</span>
+                            <span className="material-symbols-outlined !text-[64px] text-gray-200 mb-4 notranslate">event_busy</span>
                             <p className="text-silver font-bold uppercase tracking-widest text-xs">No tienes clases programadas</p>
                             <p className="text-[10px] text-silver/60">en este mes</p>
                         </div>
@@ -274,7 +274,7 @@ const TeacherScheduleView = ({ teacher, clases, onBack, onSelectClase, onNavigat
                         onClick={() => onNavigate('dashboard')}
                         className="flex flex-col items-center gap-1 p-3 px-6 text-charcoal/40 hover:text-primary transition-all active:scale-90"
                     >
-                        <span className="material-symbols-outlined !text-2xl">home</span>
+                        <span className="material-symbols-outlined !text-2xl notranslate">home</span>
                         <span className="text-[8px] font-black uppercase tracking-widest">Inicio</span>
                     </button>
                     <div className="w-px h-8 bg-gray-100 self-center"></div>
@@ -282,7 +282,7 @@ const TeacherScheduleView = ({ teacher, clases, onBack, onSelectClase, onNavigat
                         onClick={() => onNavigate('reuniones')}
                         className="flex flex-col items-center gap-1 p-3 px-6 text-charcoal/40 hover:text-primary transition-all active:scale-90"
                     >
-                        <span className="material-symbols-outlined !text-2xl">event</span>
+                        <span className="material-symbols-outlined !text-2xl notranslate">event</span>
                         <span className="text-[8px] font-black uppercase tracking-widest">Reuniones</span>
                     </button>
                     <div className="w-px h-8 bg-gray-100 self-center"></div>
@@ -290,7 +290,7 @@ const TeacherScheduleView = ({ teacher, clases, onBack, onSelectClase, onNavigat
                         onClick={() => onNavigate('calendario')}
                         className="flex flex-col items-center gap-1 p-3 px-6 text-charcoal/40 hover:text-primary transition-all active:scale-90"
                     >
-                        <span className="material-symbols-outlined !text-2xl">calendar_view_month</span>
+                        <span className="material-symbols-outlined !text-2xl notranslate">calendar_view_month</span>
                         <span className="text-[8px] font-black uppercase tracking-widest">General</span>
                     </button>
                 </div>

@@ -126,7 +126,7 @@ const ClassForm = ({ onClose, onSaveSuccess, claseToEdit, showClassForm }) => {
                 </div>
                 <div className="flex w-12 items-center justify-end">
                     <button onClick={onClose} className="flex items-center justify-center rounded-xl h-12 bg-transparent text-primary p-0">
-                        <span className="material-symbols-outlined">check_circle</span>
+                        <span className="material-symbols-outlined notranslate">check_circle</span>
                     </button>
                 </div>
             </div>
@@ -135,7 +135,7 @@ const ClassForm = ({ onClose, onSaveSuccess, claseToEdit, showClassForm }) => {
                 {/* Hero Image Placeholder */}
                 <div>
                     <div className="w-full bg-primary/5 flex flex-col items-center justify-center overflow-hidden rounded-xl min-h-[160px] border-2 border-dashed border-primary/20">
-                        <span className="material-symbols-outlined text-primary text-4xl mb-2">auto_stories</span>
+                        <span className="material-symbols-outlined text-primary text-4xl mb-2 notranslate">auto_stories</span>
                         <p className="text-primary font-medium text-sm">Planificación Dominical</p>
                     </div>
                 </div>
@@ -143,7 +143,7 @@ const ClassForm = ({ onClose, onSaveSuccess, claseToEdit, showClassForm }) => {
                 {/* General Info Section */}
                 <section className="space-y-4">
                     <div className="flex items-center gap-2 px-1">
-                        <span className="material-symbols-outlined text-primary text-xl">calendar_today</span>
+                        <span className="material-symbols-outlined text-primary text-xl notranslate">calendar_today</span>
                         <h3 className="text-charcoal text-md font-bold leading-tight">Información General</h3>
                     </div>
                     <div className="space-y-4">
@@ -167,7 +167,7 @@ const ClassForm = ({ onClose, onSaveSuccess, claseToEdit, showClassForm }) => {
                 {/* Assignment Section */}
                 <section className="space-y-4 pt-2">
                     <div className="flex items-center gap-2 px-1">
-                        <span className="material-symbols-outlined text-primary text-xl">group</span>
+                        <span className="material-symbols-outlined text-primary text-xl notranslate">group</span>
                         <h3 className="text-charcoal text-md font-bold leading-tight">Asignación de Maestros</h3>
                     </div>
                     <div className="grid grid-cols-1 gap-4">
@@ -204,7 +204,7 @@ const ClassForm = ({ onClose, onSaveSuccess, claseToEdit, showClassForm }) => {
                 {/* Detailed Content Section */}
                 <section className="space-y-4 pt-2">
                     <div className="flex items-center gap-2 px-1">
-                        <span className="material-symbols-outlined text-primary text-xl">edit_note</span>
+                        <span className="material-symbols-outlined text-primary text-xl notranslate">edit_note</span>
                         <h3 className="text-charcoal text-md font-bold leading-tight">Contenido de la Clase</h3>
                     </div>
                     <div className="space-y-4">

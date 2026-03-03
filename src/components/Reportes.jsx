@@ -88,7 +88,7 @@ const Reportes = ({ clases, maestros, onNavigate }) => {
             <header className="fixed top-0 left-0 right-0 z-50 glass-effect bg-white/80 border-b border-gray-100 p-4">
                 <div className="flex items-center gap-3">
                     <button onClick={() => onNavigate('dashboard')} className="size-10 flex items-center justify-center rounded-full bg-bone text-charcoal/60 hover:text-charcoal transition-colors">
-                        <span className="material-symbols-outlined">arrow_back</span>
+                        <span className="material-symbols-outlined notranslate">arrow_back</span>
                     </button>
                     <div>
                         <h1 className="text-base font-extrabold tracking-tight text-charcoal leading-tight">Reportes</h1>
@@ -101,7 +101,7 @@ const Reportes = ({ clases, maestros, onNavigate }) => {
                 <section className="bg-white rounded-2xl p-6 border border-gray-100 shadow-soft">
                     <div className="flex items-center gap-4 mb-6">
                         <div className="size-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
-                            <span className="material-symbols-outlined !text-3xl">picture_as_pdf</span>
+                            <span className="material-symbols-outlined !text-3xl notranslate">picture_as_pdf</span>
                         </div>
                         <div>
                             <h2 className="text-lg font-black text-charcoal">Reportes Mensuales</h2>
@@ -116,13 +116,13 @@ const Reportes = ({ clases, maestros, onNavigate }) => {
                             className="w-full flex items-center justify-between p-4 rounded-xl bg-bone hover:bg-gray-100 transition-all active:scale-[0.98] group"
                         >
                             <div className="flex items-center gap-3">
-                                <span className="material-symbols-outlined text-silver group-hover:text-primary transition-colors">description</span>
+                                <span className="material-symbols-outlined text-silver group-hover:text-primary transition-colors notranslate">description</span>
                                 <div className="text-left">
                                     <p className="text-sm font-bold text-charcoal">Resumen de Clases y Bitácora</p>
                                     <p className="text-[10px] text-silver uppercase font-black">Formato PDF • Todo el mes</p>
                                 </div>
                             </div>
-                            <span className="material-symbols-outlined text-silver">download</span>
+                            <span className="material-symbols-outlined text-silver notranslate">download</span>
                         </button>
                     </div>
                 </section>
@@ -130,7 +130,7 @@ const Reportes = ({ clases, maestros, onNavigate }) => {
                 <section className="bg-white rounded-2xl p-6 border border-gray-100 shadow-soft opacity-50 cursor-not-allowed">
                     <div className="flex items-center gap-4 mb-2">
                         <div className="size-12 rounded-xl bg-charcoal/5 flex items-center justify-center text-charcoal/30">
-                            <span className="material-symbols-outlined !text-3xl">analytics</span>
+                            <span className="material-symbols-outlined !text-3xl notranslate">analytics</span>
                         </div>
                         <div>
                             <h2 className="text-lg font-black text-charcoal/40">Estadísticas de Asistencia</h2>
@@ -142,15 +142,15 @@ const Reportes = ({ clases, maestros, onNavigate }) => {
 
             <nav className="fixed bottom-0 left-0 right-0 glass-effect bg-white/90 border-t border-gray-100 pb-8 pt-3 px-6 flex justify-around items-center z-50">
                 <button className="flex flex-col items-center gap-1 text-charcoal/40 hover:text-charcoal transition-colors" onClick={() => onNavigate('teacher-selection')}>
-                    <span className="material-symbols-outlined !text-[26px]">home</span>
+                    <span className="material-symbols-outlined !text-[26px] notranslate">home</span>
                     <span className="text-[10px] font-bold uppercase tracking-widest">Inicio</span>
                 </button>
                 <button className="flex flex-col items-center gap-1 text-charcoal/40 hover:text-charcoal transition-colors" onClick={() => onNavigate('dashboard')}>
-                    <span className="material-symbols-outlined !text-[26px]">menu_book</span>
+                    <span className="material-symbols-outlined !text-[26px] notranslate">menu_book</span>
                     <span className="text-[10px] font-bold uppercase tracking-widest">Lecciones</span>
                 </button>
                 <button className="flex flex-col items-center gap-1 text-primary nav-indicator active">
-                    <span className="material-symbols-outlined !text-[26px] fill-1">bar_chart</span>
+                    <span className="material-symbols-outlined !text-[26px] fill-1 notranslate">bar_chart</span>
                     <span className="text-[10px] font-black uppercase tracking-widest">Reportes</span>
                 </button>
             </nav>

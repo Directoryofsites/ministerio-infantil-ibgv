@@ -64,7 +64,7 @@ const Calendario = ({ onNavigate, onNewClass, onSelectClase, clases }) => {
                 </div>
                 <div className="flex w-10 items-center justify-end">
                     <button className="flex items-center justify-center rounded-full size-10 hover:bg-bone transition-colors" title="Sin notificaciones">
-                        <span className="material-symbols-outlined text-charcoal/30">notifications_off</span>
+                        <span className="material-symbols-outlined text-charcoal/30 notranslate">notifications_off</span>
                     </button>
                 </div>
             </div>
@@ -74,13 +74,13 @@ const Calendario = ({ onNavigate, onNewClass, onSelectClase, clases }) => {
                 {/* Month Selector */}
                 <div className="flex items-center px-6 py-4 justify-between">
                     <button onClick={prevMonth} className="size-10 flex items-center justify-center rounded-full bg-primary/10 text-primary active:scale-90 transition-transform">
-                        <span className="material-symbols-outlined">chevron_left</span>
+                        <span className="material-symbols-outlined notranslate">chevron_left</span>
                     </button>
                     <div className="text-center">
                         <p className="text-charcoal text-xl font-bold font-display">{monthNames[currentMonth]} {currentYear}</p>
                     </div>
                     <button onClick={nextMonth} className="size-10 flex items-center justify-center rounded-full bg-primary/10 text-primary active:scale-90 transition-transform">
-                        <span className="material-symbols-outlined">chevron_right</span>
+                        <span className="material-symbols-outlined notranslate">chevron_right</span>
                     </button>
                 </div>
 
@@ -153,7 +153,7 @@ const Calendario = ({ onNavigate, onNewClass, onSelectClase, clases }) => {
                                             </div>
                                         </div>
                                         <button onClick={() => onSelectClase(clase)} className="w-full py-3 bg-primary text-white rounded-xl font-bold text-sm shadow-md shadow-primary/20 flex items-center justify-center gap-2 active:scale-95 transition-all">
-                                            <span className="material-symbols-outlined text-lg">description</span>
+                                            <span className="material-symbols-outlined text-lg notranslate">description</span>
                                             Ver Detalles de la Lección
                                         </button>
                                     </div>
@@ -161,7 +161,7 @@ const Calendario = ({ onNavigate, onNewClass, onSelectClase, clases }) => {
                             ))
                         ) : (
                             <div className="bg-bone/50 border border-dashed border-gray-200 rounded-2xl p-8 text-center bg-white shadow-soft">
-                                <span className="material-symbols-outlined text-silver !text-4xl mb-2">calendar_today</span>
+                                <span className="material-symbols-outlined text-silver !text-4xl mb-2 notranslate">calendar_today</span>
                                 <p className="text-silver text-sm font-medium">No hay clases programadas para este día.</p>
                                 <button
                                     onClick={onNewClass}
@@ -180,23 +180,23 @@ const Calendario = ({ onNavigate, onNewClass, onSelectClase, clases }) => {
             {/* Bottom Navigation Bar */}
             <nav className="fixed bottom-0 left-0 right-0 glass-effect bg-white/90 border-t border-gray-100 pb-8 pt-3 px-6 flex justify-around items-center z-50">
                 <button className="flex flex-col items-center gap-1 text-charcoal/40 hover:text-charcoal transition-colors" onClick={() => onNavigate('teacher-selection')}>
-                    <span className="material-symbols-outlined text-2xl">home</span>
+                    <span className="material-symbols-outlined text-2xl notranslate">home</span>
                     <p className="text-[10px] font-medium leading-normal">Inicio</p>
                 </button>
                 <button className="flex flex-col items-center gap-1 text-primary active" onClick={() => onNavigate('calendario')}>
-                    <span className="material-symbols-outlined text-2xl fill-1">calendar_month</span>
+                    <span className="material-symbols-outlined text-2xl fill-1 notranslate">calendar_month</span>
                     <p className="text-[10px] font-medium leading-normal flex-1 font-black uppercase tracking-widest mt-1">Calendario</p>
                 </button>
                 <button className="flex flex-col items-center gap-1 text-charcoal/40 hover:text-charcoal transition-colors" onClick={() => onNavigate('dashboard')}>
-                    <span className="material-symbols-outlined text-2xl">menu_book</span>
+                    <span className="material-symbols-outlined text-2xl notranslate">menu_book</span>
                     <p className="text-[10px] font-medium leading-normal">Lecciones</p>
                 </button>
                 <button className="flex flex-col items-center gap-1 text-charcoal/40 hover:text-charcoal transition-colors" onClick={() => onNavigate('reuniones')}>
-                    <span className="material-symbols-outlined text-2xl">event</span>
+                    <span className="material-symbols-outlined text-2xl notranslate">event</span>
                     <p className="text-[10px] font-medium leading-normal">Reuniones</p>
                 </button>
                 <button className="flex flex-col items-center gap-1 text-charcoal/40 hover:text-charcoal transition-colors" onClick={() => onNavigate('maestros')}>
-                    <span className="material-symbols-outlined text-2xl">group</span>
+                    <span className="material-symbols-outlined text-2xl notranslate">group</span>
                     <p className="text-[10px] font-medium leading-normal">Maestros</p>
                 </button>
             </nav>

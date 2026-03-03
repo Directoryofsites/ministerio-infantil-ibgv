@@ -39,7 +39,7 @@ const LoginModal = ({ isOpen, onClose, onLoginSuccess }) => {
                 <div className="p-8">
                     <div className="flex flex-col items-center mb-8">
                         <div className="size-16 rounded-2xl bg-primary/10 flex items-center justify-center text-primary mb-4">
-                            <span className="material-symbols-outlined text-4xl">lock_person</span>
+                            <span className="material-symbols-outlined text-4xl notranslate">lock_person</span>
                         </div>
                         <h2 className="text-2xl font-black text-charcoal">Modo Administrador</h2>
                         <p className="text-silver font-bold text-xs uppercase tracking-widest mt-1">Ingresa tus credenciales</p>
@@ -72,7 +72,7 @@ const LoginModal = ({ isOpen, onClose, onLoginSuccess }) => {
 
                         {error && (
                             <div className="bg-red-50 p-4 rounded-xl flex items-center gap-3 text-red-500">
-                                <span className="material-symbols-outlined text-xl">error</span>
+                                <span className="material-symbols-outlined text-xl notranslate">error</span>
                                 <p className="text-xs font-bold leading-tight">{error}</p>
                             </div>
                         )}

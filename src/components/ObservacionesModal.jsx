@@ -61,7 +61,7 @@ const ObservacionesModal = ({ clase, teacher, onClose }) => {
                         </p>
                     </div>
                     <button onClick={onClose} className="size-10 flex items-center justify-center rounded-full bg-bone text-charcoal/40 hover:text-charcoal transition-colors">
-                        <span className="material-symbols-outlined">close</span>
+                        <span className="material-symbols-outlined notranslate">close</span>
                     </button>
                 </div>
 
@@ -69,7 +69,7 @@ const ObservacionesModal = ({ clase, teacher, onClose }) => {
                 <div className="p-6 space-y-4">
                     <div className="bg-primary/5 p-4 rounded-xl border border-primary/10">
                         <div className="flex items-center gap-2 mb-2">
-                            <span className="material-symbols-outlined text-primary text-sm">history_edu</span>
+                            <span className="material-symbols-outlined text-primary text-sm notranslate">history_edu</span>
                             <span className="text-xs font-black text-primary uppercase tracking-wider">Bitácora del Maestro</span>
                         </div>
                         <p className="text-sm text-charcoal/70 leading-relaxed font-medium">
@@ -79,7 +79,7 @@ const ObservacionesModal = ({ clase, teacher, onClose }) => {
 
                     {isLoading ? (
                         <div className="h-48 flex items-center justify-center bg-bone rounded-2xl border border-gray-100">
-                            <span className="material-symbols-outlined spin text-primary">sync</span>
+                            <span className="material-symbols-outlined spin text-primary notranslate">sync</span>
                         </div>
                     ) : (
                         <textarea
@@ -108,7 +108,7 @@ const ObservacionesModal = ({ clase, teacher, onClose }) => {
                             <div className="size-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                         ) : (
                             <>
-                                <span className="material-symbols-outlined !text-xl">save</span>
+                                <span className="material-symbols-outlined !text-xl notranslate">save</span>
                                 <span>Guardar</span>
                             </>
                         )}

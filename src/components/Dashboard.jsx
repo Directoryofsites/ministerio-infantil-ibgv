@@ -21,7 +21,7 @@ const Dashboard = ({ clases, onSelectClase, onNavigate, onNewClass, onEditObserv
                     </div>
                     <div className="flex items-center gap-2">
                         <button className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-50 text-charcoal/60 border border-gray-100 hover:bg-gray-100 transition-colors">
-                            <span className="material-symbols-outlined !text-xl">search</span>
+                            <span className="material-symbols-outlined !text-xl notranslate">search</span>
                         </button>
                         {isAdmin ? (
                             <button
@@ -29,7 +29,7 @@ const Dashboard = ({ clases, onSelectClase, onNavigate, onNewClass, onEditObserv
                                 className="w-10 h-10 flex items-center justify-center rounded-full bg-primary/10 text-primary border border-primary/20 hover:bg-primary/20 transition-colors"
                                 title="Cerrar Sesión Admin"
                             >
-                                <span className="material-symbols-outlined !text-xl">logout</span>
+                                <span className="material-symbols-outlined !text-xl notranslate">logout</span>
                             </button>
                         ) : (
                             <button
@@ -37,7 +37,7 @@ const Dashboard = ({ clases, onSelectClase, onNavigate, onNewClass, onEditObserv
                                 className="w-10 h-10 flex items-center justify-center rounded-full bg-bone text-charcoal/40 border border-gray-100 hover:bg-bone transition-colors"
                                 title="Acceso Admin"
                             >
-                                <span className="material-symbols-outlined !text-xl">admin_panel_settings</span>
+                                <span className="material-symbols-outlined !text-xl notranslate">admin_panel_settings</span>
                             </button>
                         )}
                     </div>
@@ -60,12 +60,12 @@ const Dashboard = ({ clases, onSelectClase, onNavigate, onNewClass, onEditObserv
                                     className="flex items-center justify-center gap-3 w-full bg-primary hover:bg-[#a6191e] text-white font-bold py-4 px-4 rounded-xl transition-all active:scale-[0.98] shadow-lg shadow-primary/20"
                                     onClick={onNewClass}
                                 >
-                                    <span className="material-symbols-outlined !text-xl">add_circle</span>
+                                    <span className="material-symbols-outlined !text-xl notranslate">add_circle</span>
                                     <span className="tracking-wide">NUEVA CLASE</span>
                                 </button>
                             </div>
                             <div className="absolute -right-8 -bottom-8 opacity-[0.03] rotate-12 pointer-events-none">
-                                <span className="material-symbols-outlined !text-[140px] text-charcoal">auto_stories</span>
+                                <span className="material-symbols-outlined !text-[140px] text-charcoal notranslate">auto_stories</span>
                             </div>
                         </div>
                     </section>
@@ -95,14 +95,14 @@ const Dashboard = ({ clases, onSelectClase, onNavigate, onNewClass, onEditObserv
                                         <p className="text-[10px] font-black text-primary mb-1 uppercase tracking-widest">{clase.fecha}</p>
                                         <h4 className="text-lg font-extrabold text-charcoal leading-tight mb-1">{clase.leccion.titulo}</h4>
                                         <div className="flex items-center gap-1.5 text-silver">
-                                            <span className="material-symbols-outlined !text-[14px]">menu_book</span>
+                                            <span className="material-symbols-outlined !text-[14px] notranslate">menu_book</span>
                                             <p className="text-xs font-medium">{clase.leccion.pasaje_biblico}</p>
                                         </div>
                                     </div>
                                     {/* Placeholder icon square instead of arbitrary image */}
                                     <div className="w-14 h-14 rounded-xl bg-bone border border-gray-100 flex items-center justify-center text-primary/20 shrink-0 shadow-sm relative overflow-hidden">
                                         <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent"></div>
-                                        <span className="material-symbols-outlined !text-2xl relative z-10">church</span>
+                                        <span className="material-symbols-outlined !text-2xl relative z-10 notranslate">church</span>
                                     </div>
                                 </div>
 
@@ -144,27 +144,27 @@ const Dashboard = ({ clases, onSelectClase, onNavigate, onNewClass, onEditObserv
             {/* BOTTOM NAV */}
             <nav className="fixed bottom-0 left-0 right-0 glass-effect bg-white/90 border-t border-gray-100 pb-8 pt-3 px-6 flex justify-around items-center z-50">
                 <button className="flex flex-col items-center gap-1 text-charcoal/40 hover:text-primary transition-colors" onClick={() => onNavigate('teacher-selection')}>
-                    <span className="material-symbols-outlined !text-[26px]">home</span>
+                    <span className="material-symbols-outlined !text-[26px] notranslate">home</span>
                     <span className="text-[10px] font-bold uppercase tracking-widest">Inicio</span>
                 </button>
                 <button className="flex flex-col items-center gap-1 text-primary nav-indicator active" onClick={() => onNavigate('dashboard')}>
-                    <span className="material-symbols-outlined !text-[26px] fill-1">menu_book</span>
+                    <span className="material-symbols-outlined !text-[26px] fill-1 notranslate">menu_book</span>
                     <span className="text-[10px] font-black uppercase tracking-widest">Lecciones</span>
                 </button>
                 <button className="flex flex-col items-center gap-1 text-charcoal/40 hover:text-charcoal transition-colors" onClick={() => onNavigate('reuniones')}>
-                    <span className="material-symbols-outlined !text-[26px]">event</span>
+                    <span className="material-symbols-outlined !text-[26px] notranslate">event</span>
                     <span className="text-[10px] font-bold uppercase tracking-widest">Reuniones</span>
                 </button>
                 <button className="flex flex-col items-center gap-1 text-charcoal/40 hover:text-charcoal transition-colors" onClick={() => onNavigate('estudiantes')}>
-                    <span className="material-symbols-outlined !text-[26px]">school</span>
+                    <span className="material-symbols-outlined !text-[26px] notranslate">school</span>
                     <span className="text-[10px] font-bold uppercase tracking-widest">Alumnos</span>
                 </button>
                 <button className="flex flex-col items-center gap-1 text-charcoal/40 hover:text-charcoal transition-colors" onClick={() => onNavigate('reportes')}>
-                    <span className="material-symbols-outlined !text-[26px]">bar_chart</span>
+                    <span className="material-symbols-outlined !text-[26px] notranslate">bar_chart</span>
                     <span className="text-[10px] font-bold uppercase tracking-widest">Reportes</span>
                 </button>
                 <button className="flex flex-col items-center gap-1 text-charcoal/40 hover:text-charcoal transition-colors" onClick={() => onNavigate('maestros')}>
-                    <span className="material-symbols-outlined !text-[26px]">group</span>
+                    <span className="material-symbols-outlined !text-[26px] notranslate">group</span>
                     <span className="text-[10px] font-bold uppercase tracking-widest">Maestros</span>
                 </button>
             </nav>
