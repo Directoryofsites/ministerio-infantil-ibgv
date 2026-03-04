@@ -141,6 +141,11 @@ initDb();
 
 // --- RUTAS ---
 
+// Ruta ligera para mantener el servidor despierto (Keep-alive)
+app.get('/api/ping', (req, res) => {
+    res.json({ status: 'alive', time: new Date().toISOString() });
+});
+
 app.get('/api/ministerio', async (req, res) => {
     try {
         const gruposRes = await pool.query('SELECT * FROM grupos_edad');
@@ -657,4 +662,11 @@ app.listen(PORT, '0.0.0.0', () => {
     console.log("=================================================");
     console.log(`🚀 API IBGV LISTA EN PUERTO: ${PORT} `);
     console.log("=================================================");
+
+    // Auto-Ping interno cada 10 minutos para ayudar a mantener Render despierto
+    // mientras haya actividad o se haya despertado manualmente.
+    setInterval(() => {
+        const url = `https://ministerio-infantil-ibgv-api.onrender.com/api/ping`;
+        fetch(url).catch(() => { /* ignorar errores */ });
+    }, 10 * 60 * 1000); // 10 minutos
 });
