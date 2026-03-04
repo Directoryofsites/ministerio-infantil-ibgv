@@ -123,7 +123,15 @@ const initDb = async () => {
                 `);
             console.log('>>> Grupos de edad inicializados.');
         }
-        console.log('>>> Esquema de Base de Datos listo.');
+        // Limpieza de IDs con espacios accidentales (Tarea única para corregir datos viejos)
+        await pool.query(`
+            UPDATE estudiantes SET id = TRIM(id);
+            UPDATE maestros SET id = TRIM(id);
+            UPDATE asistencia SET estudiante_id = TRIM(estudiante_id);
+            UPDATE bitacora SET maestro_id = TRIM(maestro_id);
+        `);
+
+        console.log('✓ Esquema de Base de Datos listo y datos normalizados.');
     } catch (err) {
         console.error('!!! Error en initDb:', err);
     }
@@ -437,7 +445,7 @@ app.post('/api/estudiantes', async (req, res) => {
         await pool.query(
             `INSERT INTO estudiantes(id, nombre, grupo, cumpleanos, whatsapp_padres, activo, observaciones)
         VALUES($1, $2, $3, $4, $5, $6, $7)`,
-            [id || `e - ${Date.now()} `, nombre, grupo, cumpleanos || null, whatsapp_padres || null, activo !== undefined ? activo : true, observaciones || null]
+            [id || `e - ${Date.now()}`, nombre, grupo, cumpleanos || null, whatsapp_padres || null, activo !== undefined ? activo : true, observaciones || null]
         );
         res.json({ success: true, message: 'Estudiante creado' });
     } catch (err) {
@@ -485,7 +493,7 @@ app.post('/api/maestros', async (req, res) => {
     try {
         await pool.query(
             `INSERT INTO maestros(id, nombre, especialidad, activo, foto_url, rol, pin) VALUES($1, $2, $3, $4, $5, $6, $7)`,
-            [id || `m - ${Date.now()} `, nombre, especialidad, activo !== undefined ? activo : true, foto_url || null, rol || 'Invitado', pin || null]
+            [id || `m - ${Date.now()}`, nombre, especialidad, activo !== undefined ? activo : true, foto_url || null, rol || 'Invitado', pin || null]
         );
         res.json({ success: true, message: 'Maestro creado' });
     } catch (err) {
