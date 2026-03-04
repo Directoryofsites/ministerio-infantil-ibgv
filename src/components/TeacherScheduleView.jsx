@@ -206,10 +206,21 @@ const TeacherScheduleView = ({ teacher, clases, onBack, onSelectClase, onNavigat
                                                     href={`/api/programacion/${clase.id}/pdf`}
                                                     download={clase.pdf_nombre}
                                                     onClick={(e) => e.stopPropagation()}
-                                                    className="size-10 bg-charcoal/5 flex items-center justify-center rounded-2xl hover:bg-charcoal hover:text-white transition-all text-charcoal"
-                                                    title={`Descargar Material: ${clase.pdf_nombre}`}
+                                                    className="size-10 bg-red-50 text-red-500 flex items-center justify-center rounded-2xl hover:bg-red-500 hover:text-white transition-all"
+                                                    title={`Descargar Material PDF: ${clase.pdf_nombre}`}
                                                 >
-                                                    <span className="material-symbols-outlined !text-[20px] notranslate">download</span>
+                                                    <span className="material-symbols-outlined !text-[20px] notranslate">picture_as_pdf</span>
+                                                </a>
+                                            )}
+                                            {clase.tiene_word && (
+                                                <a
+                                                    href={`/api/programacion/${clase.id}/word`}
+                                                    download={clase.word_nombre}
+                                                    onClick={(e) => e.stopPropagation()}
+                                                    className="size-10 bg-blue-50 text-blue-500 flex items-center justify-center rounded-2xl hover:bg-blue-500 hover:text-white transition-all"
+                                                    title={`Descargar Planeación (Word): ${clase.word_nombre}`}
+                                                >
+                                                    <span className="material-symbols-outlined !text-[20px] notranslate">description</span>
                                                 </a>
                                             )}
                                             <button

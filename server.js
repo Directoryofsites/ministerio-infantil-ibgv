@@ -51,6 +51,12 @@ const initDb = async () => {
             )
         `);
 
+        // Migration step: PDF and Word columns if they don't exist
+        await pool.query(`ALTER TABLE programacion ADD COLUMN IF NOT EXISTS archivo_pdf_datos BYTEA`);
+        await pool.query(`ALTER TABLE programacion ADD COLUMN IF NOT EXISTS archivo_pdf_nombre VARCHAR(255)`);
+        await pool.query(`ALTER TABLE programacion ADD COLUMN IF NOT EXISTS archivo_word_datos BYTEA`);
+        await pool.query(`ALTER TABLE programacion ADD COLUMN IF NOT EXISTS archivo_word_nombre VARCHAR(255)`);
+
         await pool.query(`
             CREATE TABLE IF NOT EXISTS estudiantes(
                 id TEXT PRIMARY KEY,
@@ -139,6 +145,7 @@ app.get('/api/ministerio', async (req, res) => {
         p.id, p.fecha, p.leccion_titulo, p.leccion_pasaje, p.leccion_enfasis, p.leccion_teologia,
             p.maestro_3_7, p.maestro_8_11, p.maestro_adolescentes, p.observaciones,
             p.archivo_pdf_nombre,
+            p.archivo_word_nombre,
             m1.nombre as m_nombre_1,
             m2.nombre as m_nombre_2,
             m3.nombre as m_nombre_3
@@ -183,7 +190,9 @@ app.get('/api/ministerio', async (req, res) => {
                     rawFecha: p.fecha,
                     observaciones: p.observaciones || '',
                     tiene_pdf: !!p.archivo_pdf_nombre,
-                    pdf_nombre: p.archivo_pdf_nombre || null
+                    pdf_nombre: p.archivo_pdf_nombre || null,
+                    tiene_word: !!p.archivo_word_nombre,
+                    word_nombre: p.archivo_word_nombre || null
                 }))
             }
         };
@@ -328,6 +337,55 @@ app.get('/api/programacion/:id/pdf', async (req, res) => {
     } catch (err) {
         console.error("!!! Error GET /api/programacion/:id/pdf:", err);
         res.status(500).json({ error: 'Error al descargar PDF' });
+    }
+});
+
+// --- RUTAS WORD PROGRAMACION ---
+app.post('/api/programacion/:id/word', async (req, res) => {
+    const id = req.params.id.trim();
+    const { word_base64, word_nombre } = req.body;
+    try {
+        if (!word_base64 || !word_nombre) return res.status(400).json({ error: 'Faltan datos del archivo' });
+
+        const base64Data = word_base64.split(',')[1] || word_base64;
+        const buffer = Buffer.from(base64Data, 'base64');
+
+        await pool.query('UPDATE programacion SET archivo_word_datos = $1, archivo_word_nombre = $2 WHERE id = $3', [buffer, word_nombre, id]);
+        res.json({ success: true, message: 'Planeación guardada exitosamente' });
+    } catch (err) {
+        console.error("!!! Error POST /api/programacion/:id/word:", err);
+        res.status(500).json({ error: 'Error al subir planeación' });
+    }
+});
+app.delete('/api/programacion/:id/word', async (req, res) => {
+    const id = req.params.id.trim();
+    try {
+        await pool.query('UPDATE programacion SET archivo_word_datos = NULL, archivo_word_nombre = NULL WHERE id = $1', [id]);
+        res.json({ success: true, message: 'Planeación eliminada' });
+    } catch (err) {
+        console.error("!!! Error DELETE /api/programacion/:id/word:", err);
+        res.status(500).json({ error: 'Error al eliminar planeación' });
+    }
+});
+app.get('/api/programacion/:id/word', async (req, res) => {
+    const id = req.params.id.trim();
+    try {
+        const result = await pool.query('SELECT archivo_word_datos, archivo_word_nombre FROM programacion WHERE id = $1', [id]);
+        if (result.rowCount === 0 || !result.rows[0].archivo_word_datos) {
+            return res.status(404).json({ error: 'Archivo no encontrado' });
+        }
+        const file = result.rows[0];
+        // Set content type for Word (handling both doc and docx)
+        const contentType = file.archivo_word_nombre.endsWith('.docx')
+            ? 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+            : 'application/msword';
+
+        res.setHeader('Content-Type', contentType);
+        res.setHeader('Content-Disposition', `attachment; filename="${file.archivo_word_nombre}"`);
+        res.send(file.archivo_word_datos);
+    } catch (err) {
+        console.error("!!! Error GET /api/programacion/:id/word:", err);
+        res.status(500).json({ error: 'Error al descargar planeación' });
     }
 });
 

@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 const ClassDetail = ({ clase, onClose, onEdit, onDelete, onDuplicate, isAdmin, onRefresh }) => {
     const [asistencia, setAsistencia] = useState([]);
     const [isUploading, setIsUploading] = useState(false);
+    const [isUploadingWord, setIsUploadingWord] = useState(false);
 
     const handleFileUpload = async (e) => {
         const file = e.target.files[0];
@@ -36,6 +37,52 @@ const ClassDetail = ({ clase, onClose, onEdit, onDelete, onDuplicate, isAdmin, o
         if (!window.confirm("¿Seguro que deseas eliminar el PDF de esta lección?")) return;
         try {
             const res = await fetch(`/api/programacion/${clase.id}/pdf`, { method: 'DELETE' });
+            if (res.ok) {
+                if (onRefresh) onRefresh();
+                onClose();
+            }
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
+    const handleWordUpload = async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const fileName = file.name.toLowerCase();
+        if (!fileName.endsWith('.doc') && !fileName.endsWith('.docx')) {
+            return alert('Solo se permiten archivos de Word (.doc, .docx)');
+        }
+
+        if (file.size > 5 * 1024 * 1024) return alert('El archivo es muy pesado. Máximo 5MB permitido.');
+
+        setIsUploadingWord(true);
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = async () => {
+            try {
+                const res = await fetch(`/api/programacion/${clase.id}/word`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ word_base64: reader.result, word_nombre: file.name })
+                });
+                if (res.ok) {
+                    if (onRefresh) onRefresh();
+                    onClose();
+                } else alert('Error al subir archivo Word');
+            } catch (err) {
+                console.error(err);
+            } finally {
+                setIsUploadingWord(false);
+            }
+        };
+    };
+
+    const handleDeleteWord = async () => {
+        if (!window.confirm("¿Seguro que deseas eliminar la planeación (Word) de esta lección?")) return;
+        try {
+            const res = await fetch(`/api/programacion/${clase.id}/word`, { method: 'DELETE' });
             if (res.ok) {
                 if (onRefresh) onRefresh();
                 onClose();
@@ -159,7 +206,7 @@ const ClassDetail = ({ clase, onClose, onEdit, onDelete, onDuplicate, isAdmin, o
                     {/* Panel C: Material Adjunto (PDF) */}
                     <div className="mt-10 space-y-4">
                         <div className="flex items-center space-x-3 text-red-600">
-                            <h3 className="text-lg font-bold uppercase tracking-tight">Material Adjunto</h3>
+                            <h3 className="text-lg font-bold uppercase tracking-tight">Material Adjunto (PDF)</h3>
                             <div className="h-px flex-1 bg-red-100"></div>
                         </div>
 
@@ -203,6 +250,57 @@ const ClassDetail = ({ clase, onClose, onEdit, onDelete, onDuplicate, isAdmin, o
                                 </div>
                             ) : (
                                 <p className="text-silver text-sm italic py-4">No hay material adjunto para esta lección.</p>
+                            )
+                        )}
+                    </div>
+
+                    {/* Panel D: Planeación Lección (Word) */}
+                    <div className="mt-10 space-y-4">
+                        <div className="flex items-center space-x-3 text-blue-600">
+                            <h3 className="text-lg font-bold uppercase tracking-tight">Planeación Lección (Word)</h3>
+                            <div className="h-px flex-1 bg-blue-100"></div>
+                        </div>
+
+                        {clase.tiene_word ? (
+                            <div className="bg-blue-50 p-6 rounded-2xl border border-blue-100 flex items-center justify-between">
+                                <div className="flex items-center gap-4">
+                                    <span className="material-symbols-outlined !text-4xl text-blue-500 notranslate">description</span>
+                                    <div>
+                                        <p className="font-bold text-blue-900">{clase.word_nombre}</p>
+                                        <p className="text-xs text-blue-600/70 font-medium">Documento de Word Adjunto</p>
+                                    </div>
+                                </div>
+                                <div className="flex items-center gap-3">
+                                    <a
+                                        href={`/api/programacion/${clase.id}/word`}
+                                        download={clase.word_nombre}
+                                        className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-xl shadow-lg shadow-blue-600/20 transition-colors flex items-center gap-2"
+                                    >
+                                        <span className="material-symbols-outlined !text-lg notranslate">download</span>
+                                        Descargar
+                                    </a>
+                                    {isAdmin && (
+                                        <button onClick={handleDeleteWord} className="p-3 bg-white text-blue-500 hover:bg-blue-100 rounded-xl transition-colors border border-blue-200">
+                                            <span className="material-symbols-outlined !text-lg notranslate">delete</span>
+                                        </button>
+                                    )}
+                                </div>
+                            </div>
+                        ) : (
+                            isAdmin ? (
+                                <div className="bg-bone p-6 rounded-2xl border-2 border-dashed border-gray-200 flex flex-col items-center justify-center text-center">
+                                    <span className="material-symbols-outlined !text-4xl text-silver mb-2 notranslate">upload_file</span>
+                                    <p className="text-charcoal font-bold mb-1">Subir Planeación de la Lección</p>
+                                    <p className="text-silver text-xs mb-4">Archivos de Word .doc, .docx (Máximo 5MB)</p>
+
+                                    <label className={`bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-xl transition-colors cursor-pointer flex items-center gap-2 ${isUploadingWord ? 'opacity-50 pointer-events-none' : ''}`}>
+                                        <span className="material-symbols-outlined !text-lg notranslate">publish</span>
+                                        {isUploadingWord ? 'Subiendo...' : 'Seleccionar Word'}
+                                        <input type="file" accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" className="hidden" onChange={handleWordUpload} disabled={isUploadingWord} />
+                                    </label>
+                                </div>
+                            ) : (
+                                <p className="text-silver text-sm italic py-4">No hay planeación de Word para esta lección.</p>
                             )
                         )}
                     </div>
