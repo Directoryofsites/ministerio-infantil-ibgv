@@ -38,6 +38,23 @@ const FormatReports = ({ onNavigate }) => {
 
     const lessonsList = Object.values(groupedFormatos).sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
 
+    const formatDate = (dateStr, options = {}) => {
+        if (!dateStr) return 'Fecha no disponible';
+        // Extraer solo YYYY-MM-DD si viene con tiempo ISO
+        const baseDate = dateStr.includes('T') ? dateStr.split('T')[0] : dateStr;
+        try {
+            return new Date(baseDate + 'T00:00:00').toLocaleDateString('es-ES', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric',
+                ...options
+            });
+        } catch (e) {
+            console.error("Error formatting date:", e);
+            return dateStr;
+        }
+    };
+
     if (loading) {
         return (
             <div className="flex h-screen items-center justify-center bg-bone">
@@ -64,11 +81,11 @@ const FormatReports = ({ onNavigate }) => {
                     <div>
                         <h1 className="text-sm font-black text-charcoal leading-none truncate">{lesson.titulo}</h1>
                         <p className="text-[10px] text-silver font-bold uppercase tracking-wider truncate">
-                            {new Date(lesson.fecha + 'T00:00:00').toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' })}
+                            {formatDate(lesson.fecha, { weekday: 'long' })}
                         </p>
                     </div>
                 </header>
-
+                {/* ...rest of the component logic remains the same... */}
                 <main className="max-w-2xl mx-auto px-6">
                     <div className="space-y-4">
                         <div className="flex items-center justify-between px-1">
@@ -136,7 +153,7 @@ const FormatReports = ({ onNavigate }) => {
                                     <div className="flex justify-between items-start">
                                         <div>
                                             <p className="text-[10px] font-black text-primary uppercase tracking-widest mb-1">
-                                                {new Date(lesson.fecha + 'T00:00:00').toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' })}
+                                                {formatDate(lesson.fecha)}
                                             </p>
                                             <h4 className="text-base font-black text-charcoal leading-tight group-hover:text-primary transition-colors">{lesson.titulo}</h4>
                                         </div>
