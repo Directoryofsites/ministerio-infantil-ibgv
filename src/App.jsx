@@ -7,6 +7,7 @@ import ClassDetail from './components/ClassDetail';
 import Calendario from './components/Calendario';
 import ObservacionesModal from './components/ObservacionesModal';
 import Reportes from './components/Reportes';
+import FormatReports from './components/FormatReports';
 import Estudiantes from './components/Estudiantes';
 import EstudianteForm from './components/EstudianteForm';
 import LoginModal from './components/LoginModal';
@@ -221,6 +222,12 @@ function App() {
       {currentView === 'reportes' && (
         <Reportes
           clases={clases}
+          onNavigate={setCurrentView}
+        />
+      )}
+
+      {currentView === 'reporte-formato' && (
+        <FormatReports
           onNavigate={setCurrentView}
         />
       )}

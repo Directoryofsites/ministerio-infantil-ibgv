@@ -252,8 +252,8 @@ const TeacherScheduleView = ({ teacher, clases, onBack, onSelectClase, onNavigat
                                         <span className="material-symbols-outlined text-primary scale-0 group-hover:scale-100 transition-transform notranslate">chevron_right</span>
                                     </div>
 
-                                    {/* OBSERVACIONES BUTTON */}
-                                    <div className="mt-4 pt-4 border-t border-gray-100 flex items-center justify-center">
+                                    {/* ACCIONES DE MAESTRO */}
+                                    <div className="mt-4 pt-4 border-t border-gray-100 space-y-3">
                                         <button
                                             onClick={(e) => {
                                                 e.stopPropagation();
@@ -264,6 +264,58 @@ const TeacherScheduleView = ({ teacher, clases, onBack, onSelectClase, onNavigat
                                             <span className="material-symbols-outlined !text-sm notranslate">edit_note</span>
                                             Añadir Observaciones
                                         </button>
+
+                                        <div className="relative">
+                                            <input
+                                                type="file"
+                                                accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                                                onChange={(e) => {
+                                                    const file = e.target.files[0];
+                                                    if (!file) return;
+
+                                                    const reader = new FileReader();
+                                                    reader.onload = async (event) => {
+                                                        const base64 = event.target.result;
+                                                        try {
+                                                            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/bitacora/formato`, {
+                                                                method: 'POST',
+                                                                headers: { 'Content-Type': 'application/json' },
+                                                                body: JSON.stringify({
+                                                                    programacion_id: clase.id,
+                                                                    maestro_id: teacher.id,
+                                                                    formato_base64: base64,
+                                                                    formato_nombre: file.name
+                                                                })
+                                                            });
+                                                            const data = await response.json();
+                                                            if (data.success) {
+                                                                alert('Formato subido exitosamente');
+                                                                window.location.reload(); // Recargar para reflejar cambios si es necesario, aunque aquí es solo subida
+                                                            } else {
+                                                                alert('Error: ' + data.error);
+                                                            }
+                                                        } catch (error) {
+                                                            console.error('Error uploading file:', error);
+                                                            alert('Error al conectar con el servidor');
+                                                        }
+                                                    };
+                                                    reader.readAsDataURL(file);
+                                                }}
+                                                className="hidden"
+                                                id={`file-upload-${clase.id}`}
+                                                onClick={(e) => e.stopPropagation()}
+                                            />
+                                            <button
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    document.getElementById(`file-upload-${clase.id}`).click();
+                                                }}
+                                                className="flex items-center justify-center gap-2 w-full py-3 px-4 rounded-xl bg-blue-50 text-blue-600 text-[10px] font-black uppercase tracking-widest hover:bg-blue-100 transition-colors border border-blue-100 z-10"
+                                            >
+                                                <span className="material-symbols-outlined !text-sm notranslate">upload_file</span>
+                                                Añadir Formato
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             ))}

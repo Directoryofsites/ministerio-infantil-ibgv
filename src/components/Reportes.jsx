@@ -124,6 +124,20 @@ const Reportes = ({ clases, maestros, onNavigate }) => {
                             </div>
                             <span className="material-symbols-outlined text-silver notranslate">download</span>
                         </button>
+
+                        <button
+                            onClick={() => onNavigate('reporte-formato')}
+                            className="w-full flex items-center justify-between p-4 rounded-xl bg-blue-50 hover:bg-blue-100 transition-all active:scale-[0.98] group border border-blue-100/50"
+                        >
+                            <div className="flex items-center gap-3">
+                                <span className="material-symbols-outlined text-blue-400 group-hover:text-blue-600 transition-colors notranslate">folder_shared</span>
+                                <div className="text-left">
+                                    <p className="text-sm font-bold text-charcoal">Reporte Formato</p>
+                                    <p className="text-[10px] text-blue-500 uppercase font-black">Archivos Word subidos por maestros</p>
+                                </div>
+                            </div>
+                            <span className="material-symbols-outlined text-blue-400 notranslate">chevron_right</span>
+                        </button>
                     </div>
                 </section>
 

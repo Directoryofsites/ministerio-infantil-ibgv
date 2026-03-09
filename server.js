@@ -106,10 +106,16 @@ const initDb = async () => {
                 programacion_id TEXT REFERENCES programacion(id),
                 maestro_id TEXT REFERENCES maestros(id),
                 observacion TEXT,
+                formato_word_datos BYTEA,
+                formato_word_nombre TEXT,
                 fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                 UNIQUE(programacion_id, maestro_id)
             )
         `);
+
+        // Agregar columnas si la tabla ya existe (migración)
+        await pool.query(`ALTER TABLE bitacora ADD COLUMN IF NOT EXISTS formato_word_datos BYTEA`);
+        await pool.query(`ALTER TABLE bitacora ADD COLUMN IF NOT EXISTS formato_word_nombre TEXT`);
 
         // Seed inicial de grupos de edad si la tabla se usara como config
         await pool.query(`CREATE TABLE IF NOT EXISTS grupos_edad(id TEXT PRIMARY KEY, nombre TEXT)`);
@@ -654,6 +660,72 @@ VALUES($1, $2, $3)
     } catch (err) {
         console.error("!!! Error POST /api/bitacora:", err);
         res.status(500).json({ error: 'Error al guardar bitácora' });
+    }
+});
+
+// --- RUTAS FORMATO REPORTE (WORD) ---
+
+app.post('/api/bitacora/formato', async (req, res) => {
+    const { programacion_id, maestro_id, formato_base64, formato_nombre } = req.body;
+    try {
+        if (!formato_base64 || !formato_nombre) return res.status(400).json({ error: 'Faltan datos del archivo' });
+
+        const base64Data = formato_base64.split(',')[1] || formato_base64;
+        const buffer = Buffer.from(base64Data, 'base64');
+
+        await pool.query(
+            `INSERT INTO bitacora(programacion_id, maestro_id, formato_word_datos, formato_word_nombre)
+             VALUES($1, $2, $3, $4)
+             ON CONFLICT(programacion_id, maestro_id)
+             DO UPDATE SET formato_word_datos = EXCLUDED.formato_word_datos, 
+                           formato_word_nombre = EXCLUDED.formato_word_nombre`,
+            [programacion_id, maestro_id, buffer, formato_nombre]
+        );
+        res.json({ success: true, message: 'Formato guardado exitosamente' });
+    } catch (err) {
+        console.error("!!! Error POST /api/bitacora/formato:", err);
+        res.status(500).json({ error: 'Error al subir formato' });
+    }
+});
+
+app.get('/api/bitacora/formatos', async (req, res) => {
+    try {
+        const result = await pool.query(`
+            SELECT 
+                b.id, b.programacion_id, b.maestro_id, b.formato_word_nombre, b.fecha_creacion,
+                m.nombre as maestro_nombre,
+                p.fecha as leccion_fecha, p.leccion_titulo
+            FROM bitacora b
+            JOIN maestros m ON b.maestro_id = m.id
+            JOIN programacion p ON b.programacion_id = p.id
+            WHERE b.formato_word_datos IS NOT NULL
+            ORDER BY p.fecha DESC
+        `);
+        res.json(result.rows);
+    } catch (err) {
+        console.error("!!! Error GET /api/bitacora/formatos:", err);
+        res.status(500).json({ error: 'Error al obtener formatos' });
+    }
+});
+
+app.get('/api/bitacora/:id/formato/descargar', async (req, res) => {
+    const { id } = req.params;
+    try {
+        const result = await pool.query('SELECT formato_word_datos, formato_word_nombre FROM bitacora WHERE id = $1', [id]);
+        if (result.rowCount === 0 || !result.rows[0].formato_word_datos) {
+            return res.status(404).json({ error: 'Formato no encontrado' });
+        }
+        const file = result.rows[0];
+        const contentType = file.formato_word_nombre.endsWith('.docx')
+            ? 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+            : 'application/msword';
+
+        res.setHeader('Content-Type', contentType);
+        res.setHeader('Content-Disposition', `attachment; filename="${file.formato_word_nombre}"`);
+        res.send(file.formato_word_datos);
+    } catch (err) {
+        console.error("!!! Error GET /api/bitacora/:id/formato/descargar:", err);
+        res.status(500).json({ error: 'Error al descargar formato' });
     }
 });
 
