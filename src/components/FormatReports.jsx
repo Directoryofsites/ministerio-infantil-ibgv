@@ -21,6 +21,26 @@ const FormatReports = ({ onNavigate }) => {
         }
     };
 
+    const handleDelete = async (id, fileName) => {
+        if (!window.confirm(`¿Seguro que deseas eliminar el formato "${fileName}"?`)) return;
+
+        try {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/bitacora/${id}/formato`, {
+                method: 'DELETE'
+            });
+            const data = await res.json();
+            if (data.success) {
+                alert('Formato eliminado correctamente');
+                fetchFormatos(); // Recargar la lista
+            } else {
+                alert('Error al eliminar: ' + data.error);
+            }
+        } catch (error) {
+            console.error('Error deleting format:', error);
+            alert('Error al conectar con el servidor');
+        }
+    };
+
     // Agrupar formatos por lección (programacion_id)
     const groupedFormatos = formatos.reduce((acc, current) => {
         const id = current.programacion_id;
@@ -101,23 +121,37 @@ const FormatReports = ({ onNavigate }) => {
                                     </div>
                                     <div>
                                         <h4 className="text-sm font-black text-charcoal">{m.maestro_nombre}</h4>
-                                        <p className="text-[10px] text-silver font-bold">{m.formato_word_nombre}</p>
+                                        <p className="text-[10px] text-silver font-bold truncate max-w-[150px]">{m.formato_word_nombre}</p>
                                     </div>
                                 </div>
-                                <a
-                                    href={`${import.meta.env.VITE_API_URL}/api/bitacora/${m.id}/formato/descargar`}
-                                    download={m.formato_word_nombre}
-                                    className="size-10 flex items-center justify-center rounded-xl bg-primary text-white hover:scale-105 transition-transform shadow-lg shadow-primary/20"
-                                    title="Descargar Formato"
-                                >
-                                    <span className="material-symbols-outlined !text-xl notranslate">download</span>
-                                </a>
+                                <div className="flex items-center gap-2">
+                                    <button
+                                        onClick={() => handleDelete(m.id, m.formato_word_nombre)}
+                                        className="size-10 flex items-center justify-center rounded-xl bg-red-50 text-red-500 hover:bg-red-100 transition-colors border border-red-100"
+                                        title="Eliminar Formato"
+                                    >
+                                        <span className="material-symbols-outlined !text-xl notranslate">delete</span>
+                                    </button>
+                                    <a
+                                        href={`${import.meta.env.VITE_API_URL}/api/bitacora/${m.id}/formato/descargar`}
+                                        download={m.formato_word_nombre}
+                                        className="size-10 flex items-center justify-center rounded-xl bg-primary text-white hover:scale-105 transition-transform shadow-lg shadow-primary/20"
+                                        title="Descargar Formato"
+                                    >
+                                        <span className="material-symbols-outlined !text-xl notranslate">download</span>
+                                    </a>
+                                </div>
                             </div>
                         ))}
                     </div>
                 </main>
             </div>
         );
+    }
+
+    // Si la lección ya no tiene formatos después de una eliminación, volver a la lista
+    if (selectedLessonId && !groupedFormatos[selectedLessonId]) {
+        setSelectedLessonId(null);
     }
 
     return (

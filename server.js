@@ -729,6 +729,20 @@ app.get('/api/bitacora/:id/formato/descargar', async (req, res) => {
     }
 });
 
+app.delete('/api/bitacora/:id/formato', async (req, res) => {
+    const { id } = req.params;
+    try {
+        await pool.query(
+            'UPDATE bitacora SET formato_word_datos = NULL, formato_word_nombre = NULL WHERE id = $1',
+            [id]
+        );
+        res.json({ success: true, message: 'Formato eliminado correctamente' });
+    } catch (err) {
+        console.error("!!! Error DELETE /api/bitacora/:id/formato:", err);
+        res.status(500).json({ error: 'Error al eliminar el formato' });
+    }
+});
+
 const PORT = 3001;
 app.listen(PORT, '0.0.0.0', () => {
     console.log("=================================================");
