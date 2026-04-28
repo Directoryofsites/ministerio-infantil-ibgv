@@ -1,0 +1,237 @@
+<html lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#c41e24", // Vibrant red from logo
+            "charcoal": "#1a1c1e",
+            "silver": "#71717a",
+            "bone": "#f9f9f7",
+            "off-white": "#fcfcfb",
+          },
+          fontFamily: {
+            "display": ["Manrope", "sans-serif"]
+          },
+          borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+        },
+      },
+    }
+  </script>
+<style type="text/tailwindcss">
+    :root {
+      --primary-red: #c41e24;
+      --charcoal-grey: #1a1c1e;
+      --bone-white: #f9f9f7;
+    }
+    body {
+      font-family: 'Manrope', sans-serif;
+      background-color: var(--bone-white);
+    }
+    .glass-effect {
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    .shadow-soft {
+      box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05), 0 2px 10px -2px rgba(0, 0, 0, 0.03);
+    }
+    .card-hover:hover {
+      box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.08);
+      transform: translateY(-1px);
+    }
+    .nav-indicator {
+      position: relative;
+    }
+    .nav-indicator.active::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 4px;
+      height: 4px;
+      background-color: var(--primary-red);
+      border-radius: 50%;
+    }
+</style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-bone text-charcoal min-h-screen font-display">
+<div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
+<header class="sticky top-0 z-50 glass-effect bg-white/80 border-b border-gray-100 p-4">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="relative w-10 h-10 flex items-center justify-center">
+<div class="absolute inset-0 bg-primary/5 rounded-xl"></div>
+<span class="material-symbols-outlined text-primary !text-2xl relative z-10">church</span>
+</div>
+<div>
+<h1 class="text-base font-extrabold tracking-tight text-charcoal leading-tight">IBGV Escuela de Niños</h1>
+<p class="text-[9px] text-primary font-bold uppercase tracking-[0.15em]">Gracia y Vida</p>
+</div>
+</div>
+<button class="w-10 h-10 flex items-center justify-center rounded-full bg-gray-50 text-charcoal/60 border border-gray-100">
+<span class="material-symbols-outlined !text-xl">search</span>
+</button>
+</div>
+</header>
+<main class="flex-1 p-5 pb-28 space-y-7">
+<section>
+<div class="relative overflow-hidden rounded-2xl p-6 bg-white border border-gray-100 shadow-soft">
+<div class="relative z-10">
+<div class="flex items-center gap-2 mb-1">
+<div class="h-[2px] w-6 bg-primary"></div>
+<h2 class="text-xs font-black uppercase tracking-widest text-primary">Próximos Eventos</h2>
+</div>
+<p class="text-xl font-extrabold text-charcoal mb-6">Gestiona tus clases hoy</p>
+<button class="flex items-center justify-center gap-3 w-full bg-primary hover:bg-[#a6191e] text-white font-bold py-4 px-4 rounded-xl transition-all active:scale-[0.98] shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined !text-xl">add_circle</span>
+<span class="tracking-wide">NUEVA CLASE</span>
+</button>
+</div>
+<div class="absolute -right-8 -bottom-8 opacity-[0.03] rotate-12 pointer-events-none">
+<span class="material-symbols-outlined !text-[140px] text-charcoal">auto_stories</span>
+</div>
+</div>
+</section>
+<section class="space-y-5">
+<div class="flex items-center justify-between px-1">
+<h3 class="text-[10px] font-black uppercase tracking-[0.2em] text-charcoal/40">Calendario de Clases</h3>
+<span class="text-xs font-bold text-primary">Ver todo</span>
+</div>
+<div class="grid grid-cols-1 gap-4">
+<div class="card-hover flex flex-col rounded-2xl bg-white border border-gray-100 p-5 transition-all shadow-soft">
+<div class="flex items-start justify-between mb-4">
+<div class="flex-1 pr-4">
+<p class="text-[10px] font-black text-primary mb-1 uppercase tracking-widest">Domingo, 15 de Marzo</p>
+<h4 class="text-lg font-extrabold text-charcoal leading-tight mb-1">El Arca de Noé</h4>
+<div class="flex items-center gap-1.5 text-silver">
+<span class="material-symbols-outlined !text-[14px]">menu_book</span>
+<p class="text-xs font-medium">Génesis 6:9 - 9:17</p>
+</div>
+</div>
+<div class="w-14 h-14 rounded-xl bg-cover bg-center border border-gray-100 shadow-md shrink-0" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCWJJ7Q0vt0_Bn4YGrY0v4jOm-nR7pkTS5n-hZvNzfLNkNlTUK5xGLP0-j1GIuOh0IlYLjLqAHxCdS8m-hl5UV9OTL5CTyfrCmdFvJDEuihNRGhj5nib7fnesQyfGL8AKW9KyZWe_eFGD6v3ET9m_mlL_xA1l4FhkcwS6MW0f5rpQ12E1OTpscED_qgujL6Iojan2_gpqv6L3ei2fO977Px5DUoOIiSi6xxTVSrF4rlmYXPAOO93YpYWBE0S40fsSCn7h_KuMiy1FI')"></div>
+</div>
+<div class="space-y-3 mt-1 pt-4 border-t border-gray-50">
+<div class="flex items-center justify-between text-sm">
+<div class="flex items-center gap-2">
+<div class="w-1 h-3.5 bg-gray-200 rounded-full"></div>
+<span class="text-charcoal/50 font-semibold text-xs uppercase tracking-wider">3-7 años</span>
+</div>
+<span class="font-bold text-charcoal/90">María García</span>
+</div>
+<div class="flex items-center justify-between text-sm">
+<div class="flex items-center gap-2">
+<div class="w-1 h-3.5 bg-gray-200 rounded-full"></div>
+<span class="text-charcoal/50 font-semibold text-xs uppercase tracking-wider">8-11 años</span>
+</div>
+<span class="font-bold text-charcoal/90">Carlos Ruiz</span>
+</div>
+<div class="flex items-center justify-between text-sm">
+<div class="flex items-center gap-2">
+<div class="w-1 h-3.5 bg-gray-200 rounded-full"></div>
+<span class="text-charcoal/50 font-semibold text-xs uppercase tracking-wider">Teens</span>
+</div>
+<span class="font-bold text-charcoal/90">Javier López</span>
+</div>
+</div>
+</div>
+<div class="card-hover flex flex-col rounded-2xl bg-white border border-gray-100 p-5 transition-all shadow-soft">
+<div class="flex items-start justify-between mb-4">
+<div class="flex-1 pr-4">
+<p class="text-[10px] font-black text-primary mb-1 uppercase tracking-widest">Domingo, 22 de Marzo</p>
+<h4 class="text-lg font-extrabold text-charcoal leading-tight mb-1">Abraham y la Promesa</h4>
+<div class="flex items-center gap-1.5 text-silver">
+<span class="material-symbols-outlined !text-[14px]">menu_book</span>
+<p class="text-xs font-medium">Génesis 12 - 15</p>
+</div>
+</div>
+<div class="w-14 h-14 rounded-xl bg-cover bg-center border border-gray-100 shadow-md shrink-0" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDwJgJHTzOn9jHl9HZXPsuOe3uS2i1YGjehCdWNM2ur0dZOME8LEnAq3varCEqbFe-ahgdUv9U33IS3RyGlgvn0y5akACo9B7Df6DroPJgTC6JdPyKxrYaaIagvDuZscCo3agVTjFun8C_TdMTrbhAO8k_GJ8kAsEEgpdNQWpRqzNJjtTn9qJzupz79l8QeVuZuoJNG82ae-94LvmZ1yIZSY4uFCvVEBVcfvPb6voD0ScsBeHeFnJN0_bQuCYq59CEtLejhlkMRTj8')"></div>
+</div>
+<div class="space-y-3 mt-1 pt-4 border-t border-gray-50">
+<div class="flex items-center justify-between text-sm">
+<div class="flex items-center gap-2">
+<div class="w-1 h-3.5 bg-gray-200 rounded-full"></div>
+<span class="text-charcoal/50 font-semibold text-xs uppercase tracking-wider">3-7 años</span>
+</div>
+<span class="font-bold text-charcoal/90">Lucía Méndez</span>
+</div>
+<div class="flex items-center justify-between text-sm">
+<div class="flex items-center gap-2">
+<div class="w-1 h-3.5 bg-primary/20 rounded-full"></div>
+<span class="text-charcoal/50 font-semibold text-xs uppercase tracking-wider">8-11 años</span>
+</div>
+<span class="font-black text-primary text-xs tracking-tighter">POR ASIGNAR</span>
+</div>
+<div class="flex items-center justify-between text-sm">
+<div class="flex items-center gap-2">
+<div class="w-1 h-3.5 bg-gray-200 rounded-full"></div>
+<span class="text-charcoal/50 font-semibold text-xs uppercase tracking-wider">Teens</span>
+</div>
+<span class="font-bold text-charcoal/90">Elena Castro</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col rounded-2xl bg-white/60 border border-gray-100 p-5 transition-all opacity-70">
+<div class="flex items-start justify-between mb-4">
+<div class="flex-1 pr-4">
+<p class="text-[10px] font-black text-primary/60 mb-1 uppercase tracking-widest">Domingo, 29 de Marzo</p>
+<h4 class="text-lg font-extrabold text-charcoal/70 leading-tight mb-1">José y su Túnica</h4>
+<div class="flex items-center gap-1.5 text-silver/60">
+<span class="material-symbols-outlined !text-[14px]">menu_book</span>
+<p class="text-xs font-medium">Génesis 37</p>
+</div>
+</div>
+<div class="w-14 h-14 rounded-xl bg-cover bg-center border border-gray-100 grayscale opacity-60 shrink-0" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAgmo-Mj2f2uA2wYku3MKS-ePwS-6rCsd6PUgbX74gHaSvsic-jsd22wliJKsrdKhxkSYaKB0i4VEcoC7YzjH7furC3c2NFTX2jvPSu75f8Ys3-sRpceddLY2eSxoiA3z0DF8YEFtOPJvR9kJluJXXrGesmbaI6ew6Iftv7E6oYE5Q43cbwdCyMUG8O7VwHuM5xlvGjoMDOV-tuOK_0iXACc3jLdUglix4qDbYx1-ZKL1MXmnIE10rgy9PK1Oe_G7uYyMETreeBnYo')"></div>
+</div>
+<div class="space-y-3 mt-1 pt-4 border-t border-gray-100">
+<div class="flex items-center justify-between text-sm">
+<div class="flex items-center gap-2">
+<div class="w-1 h-3.5 bg-gray-100 rounded-full"></div>
+<span class="text-charcoal/40 font-semibold text-xs uppercase tracking-wider">3-7 años</span>
+</div>
+<span class="font-bold text-charcoal/40">Roberto Díaz</span>
+</div>
+<div class="flex items-center justify-between text-sm">
+<div class="flex items-center gap-2">
+<div class="w-1 h-3.5 bg-gray-100 rounded-full"></div>
+<span class="text-charcoal/40 font-semibold text-xs uppercase tracking-wider">8-11 años</span>
+</div>
+<span class="font-bold text-charcoal/40">Sonia Vega</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<nav class="fixed bottom-0 left-0 right-0 glass-effect bg-white/90 border-t border-gray-100 pb-8 pt-3 px-6 flex justify-around items-center z-50">
+<a class="flex flex-col items-center gap-1 text-primary nav-indicator active" href="#">
+<span class="material-symbols-outlined !text-[26px] fill-1">calendar_month</span>
+<span class="text-[10px] font-black uppercase tracking-widest">Clases</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-charcoal/40 hover:text-charcoal transition-colors" href="#">
+<span class="material-symbols-outlined !text-[26px]">book_2</span>
+<span class="text-[10px] font-bold uppercase tracking-widest">Recursos</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-charcoal/40 hover:text-charcoal transition-colors" href="#">
+<span class="material-symbols-outlined !text-[26px]">group</span>
+<span class="text-[10px] font-bold uppercase tracking-widest">Maestros</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-charcoal/40 hover:text-charcoal transition-colors" href="#">
+<span class="material-symbols-outlined !text-[26px]">settings</span>
+<span class="text-[10px] font-bold uppercase tracking-widest">Ajustes</span>
+</a>
+</nav>
+</div>
+
+</body></html>
