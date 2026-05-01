@@ -185,11 +185,12 @@ const TeacherScheduleView = ({ teacher, clases, onBack, onSelectClase, onNavigat
                         <span className="text-[10px] font-bold text-silver">{filteredClases.length} clases</span>
                     </div>
 
-                    {filteredClases.length > 0 ? (
+                    {filteredClases.length > 0 ? 
                         <div className="grid gap-4">
-                            {filteredClases.map((clase) => (
-                                <div
-                                    key={clase.id}
+                            {filteredClases.map((clase) => {
+                                return (
+                                    <div
+                                        key={clase.id}
                                     onClick={() => onSelectClase(clase)}
                                     className="group relative bg-white p-5 rounded-3xl shadow-xl shadow-charcoal/5 border border-transparent hover:border-primary/20 transition-all cursor-pointer active:scale-[0.98]"
                                 >
@@ -253,7 +254,8 @@ const TeacherScheduleView = ({ teacher, clases, onBack, onSelectClase, onNavigat
                                     </div>
 
                                     {/* ACCIONES DE MAESTRO - PROTEGIDAS POR PIN */}
-                                    {isAdmin && (
+                                    {/* ACCIONES DE MAESTRO - PROTEGIDAS POR PIN */}
+                                    {isAdmin && 
                                         <div className="mt-4 pt-4 border-t border-gray-100 space-y-3">
                                         <button
                                             onClick={(e) => {
@@ -316,12 +318,14 @@ const TeacherScheduleView = ({ teacher, clases, onBack, onSelectClase, onNavigat
                                                 <span className="material-symbols-outlined !text-sm notranslate">upload_file</span>
                                                 Añadir Formato
                                             </button>
+                                            </div>
                                         </div>
-                                    )}
-                                </div>
-                            ))}
+                                    }
+                                    </div>
+                                );
+                            })}
                         </div>
-                    ) : (
+                    : (
                         <div className="text-center py-20 bg-white/50 rounded-[3rem] border-2 border-dashed border-gray-100">
                             <span className="material-symbols-outlined !text-[64px] text-gray-200 mb-4 notranslate">event_busy</span>
                             <p className="text-silver font-bold uppercase tracking-widest text-xs">No tienes clases programadas</p>
