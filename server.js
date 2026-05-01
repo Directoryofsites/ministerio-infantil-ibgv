@@ -543,13 +543,36 @@ app.put('/api/maestros/:id', async (req, res) => {
 
 app.delete('/api/maestros/:id', async (req, res) => {
     const id = req.params.id.trim();
+    console.log(`>>> INTENTANDO ELIMINAR MAESTRO ID: [${id}]`);
     try {
+        await pool.query('BEGIN');
+
+        // 1. Limpiar referencias en la tabla programacion (quitarlo de las clases asignadas)
+        await pool.query('UPDATE programacion SET maestro_3_7 = NULL WHERE maestro_3_7 = $1', [id]);
+        await pool.query('UPDATE programacion SET maestro_8_11 = NULL WHERE maestro_8_11 = $1', [id]);
+        await pool.query('UPDATE programacion SET maestro_adolescentes = NULL WHERE maestro_adolescentes = $1', [id]);
+
+        // 2. Eliminar entradas de bitácora asociadas a este maestro
+        await pool.query('DELETE FROM bitacora WHERE maestro_id = $1', [id]);
+
+        // 3. Eliminar al maestro
         const result = await pool.query('DELETE FROM maestros WHERE id = $1', [id]);
-        if (result.rowCount === 0) return res.status(404).json({ error: 'Maestro no encontrado' });
-        res.json({ success: true, message: 'Maestro eliminado' });
+
+        await pool.query('COMMIT');
+
+        if (result.rowCount === 0) {
+            return res.status(404).json({ error: 'Maestro no encontrado' });
+        }
+
+        console.log(`>>> MAESTRO [${id}] ELIMINADO EXITOSAMENTE`);
+        res.json({ success: true, message: 'Maestro eliminado y referencias limpiadas' });
     } catch (err) {
+        await pool.query('ROLLBACK');
         console.error("!!! Error DELETE /api/maestros:", err);
-        res.status(500).json({ error: 'Server error deleting teacher', details: err.message });
+        res.status(500).json({
+            error: 'Error al eliminar maestro (probablemente tiene datos asociados)',
+            details: err.message
+        });
     }
 });
 
