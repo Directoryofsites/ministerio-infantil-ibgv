@@ -180,20 +180,34 @@ const Maestros = ({ onNavigate, onNewMaestro, onEditMaestro, onDeleteMaestro, is
             {/* Bottom Navigation Bar */}
             <nav className="fixed bottom-0 left-0 right-0 glass-effect bg-white/90 border-t border-gray-100 pb-8 pt-3 px-6 flex justify-around items-center z-50">
                 <button className="flex flex-col items-center gap-1 text-charcoal/40 hover:text-charcoal transition-colors" onClick={() => onNavigate('teacher-selection')}>
-                    <span className="material-symbols-outlined text-2xl notranslate">home</span>
-                    <p className="text-[10px] font-medium leading-normal">Inicio</p>
+                    <span className="material-symbols-outlined !text-[26px] notranslate">home</span>
+                    <span className="text-[10px] font-bold uppercase tracking-widest">Inicio</span>
                 </button>
                 <button className="flex flex-col items-center gap-1 text-charcoal/40 hover:text-charcoal transition-colors" onClick={() => onNavigate('dashboard')}>
-                    <span className="material-symbols-outlined text-2xl notranslate">menu_book</span>
-                    <p className="text-[10px] font-medium leading-normal">Lecciones</p>
+                    <span className="material-symbols-outlined !text-[26px] notranslate">menu_book</span>
+                    <span className="text-[10px] font-bold uppercase tracking-widest">Lecciones</span>
                 </button>
                 <button className="flex flex-col items-center gap-1 text-charcoal/40 hover:text-charcoal transition-colors" onClick={() => onNavigate('reuniones')}>
-                    <span className="material-symbols-outlined text-2xl notranslate">event</span>
-                    <p className="text-[10px] font-medium leading-normal">Reuniones</p>
+                    <span className="material-symbols-outlined !text-[26px] notranslate">event</span>
+                    <span className="text-[10px] font-bold uppercase tracking-widest">Reuniones</span>
                 </button>
-                <button className="flex flex-col items-center gap-1 text-primary active" onClick={() => onNavigate('maestros')}>
-                    <span className="material-symbols-outlined text-2xl fill-1 notranslate">group</span>
-                    <p className="text-[10px] font-medium leading-normal flex-1 font-black uppercase tracking-widest mt-1">Maestros</p>
+                
+                {isAdmin && (
+                    <>
+                        <button className="flex flex-col items-center gap-1 text-charcoal/40 hover:text-charcoal transition-colors" onClick={() => onNavigate('estudiantes')}>
+                            <span className="material-symbols-outlined !text-[26px] notranslate">school</span>
+                            <span className="text-[10px] font-bold uppercase tracking-widest">Alumnos</span>
+                        </button>
+                        <button className="flex flex-col items-center gap-1 text-charcoal/40 hover:text-charcoal transition-colors" onClick={() => onNavigate('reportes')}>
+                            <span className="material-symbols-outlined !text-[26px] notranslate">bar_chart</span>
+                            <span className="text-[10px] font-bold uppercase tracking-widest">Reportes</span>
+                        </button>
+                    </>
+                )}
+
+                <button className="flex flex-col items-center gap-1 text-primary nav-indicator active" onClick={() => onNavigate('maestros')}>
+                    <span className="material-symbols-outlined !text-[26px] fill-1 notranslate">group</span>
+                    <span className="text-[10px] font-black uppercase tracking-widest">Maestros</span>
                 </button>
             </nav>
         </div>

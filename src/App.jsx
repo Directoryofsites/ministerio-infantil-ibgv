@@ -179,6 +179,7 @@ function App() {
         <TeacherScheduleView
           teacher={selectedTeacher}
           clases={clases}
+          isAdmin={isAdmin}
           onBack={() => setCurrentView('teacher-selection')}
           onSelectClase={setSelectedClase}
           onNavigate={setCurrentView}

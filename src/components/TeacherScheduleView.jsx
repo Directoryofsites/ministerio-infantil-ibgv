@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { jsPDF } from 'jspdf';
 
-const TeacherScheduleView = ({ teacher, clases, onBack, onSelectClase, onNavigate, onEditObservations }) => {
+const TeacherScheduleView = ({ teacher, clases, onBack, onSelectClase, onNavigate, onEditObservations, isAdmin }) => {
     const exportLessonPDF = (e, clase) => {
         e.stopPropagation();
         const doc = new jsPDF();
@@ -134,7 +134,7 @@ const TeacherScheduleView = ({ teacher, clases, onBack, onSelectClase, onNavigat
                     </div>
                 </div>
                 <div className="flex-1 flex justify-end gap-2 shrink-0">
-                    {teacher.rol === 'Administrador' && (
+                    {isAdmin && (
                         <button
                             onClick={() => onNavigate('dashboard')}
                             className="flex items-center gap-1.5 px-3 py-2 bg-charcoal text-white rounded-full shadow-lg shadow-charcoal/20 active:scale-95 transition-all"
@@ -252,8 +252,9 @@ const TeacherScheduleView = ({ teacher, clases, onBack, onSelectClase, onNavigat
                                         <span className="material-symbols-outlined text-primary scale-0 group-hover:scale-100 transition-transform notranslate">chevron_right</span>
                                     </div>
 
-                                    {/* ACCIONES DE MAESTRO */}
-                                    <div className="mt-4 pt-4 border-t border-gray-100 space-y-3">
+                                    {/* ACCIONES DE MAESTRO - PROTEGIDAS POR PIN */}
+                                    {isAdmin && (
+                                        <div className="mt-4 pt-4 border-t border-gray-100 space-y-3">
                                         <button
                                             onClick={(e) => {
                                                 e.stopPropagation();
@@ -316,7 +317,7 @@ const TeacherScheduleView = ({ teacher, clases, onBack, onSelectClase, onNavigat
                                                 Añadir Formato
                                             </button>
                                         </div>
-                                    </div>
+                                    )}
                                 </div>
                             ))}
                         </div>
@@ -330,33 +331,37 @@ const TeacherScheduleView = ({ teacher, clases, onBack, onSelectClase, onNavigat
                 </div>
             </main>
 
-            {/* Bottom Nav (Solo para Administradores o para volver al inicio) */}
-            <nav className="fixed bottom-0 left-4 right-4 z-50 mb-6 flex justify-center">
-                <div className="glass-effect bg-white/90 rounded-[2.5rem] shadow-2xl shadow-charcoal/20 border border-white/50 p-2 flex gap-1 px-4">
-                    <button
-                        onClick={() => onNavigate('dashboard')}
-                        className="flex flex-col items-center gap-1 p-3 px-6 text-charcoal/40 hover:text-primary transition-all active:scale-90"
-                    >
-                        <span className="material-symbols-outlined !text-2xl notranslate">home</span>
-                        <span className="text-[8px] font-black uppercase tracking-widest">Inicio</span>
-                    </button>
-                    <div className="w-px h-8 bg-gray-100 self-center"></div>
-                    <button
-                        onClick={() => onNavigate('reuniones')}
-                        className="flex flex-col items-center gap-1 p-3 px-6 text-charcoal/40 hover:text-primary transition-all active:scale-90"
-                    >
-                        <span className="material-symbols-outlined !text-2xl notranslate">event</span>
-                        <span className="text-[8px] font-black uppercase tracking-widest">Reuniones</span>
-                    </button>
-                    <div className="w-px h-8 bg-gray-100 self-center"></div>
-                    <button
-                        onClick={() => onNavigate('calendario')}
-                        className="flex flex-col items-center gap-1 p-3 px-6 text-charcoal/40 hover:text-primary transition-all active:scale-90"
-                    >
-                        <span className="material-symbols-outlined !text-2xl notranslate">calendar_view_month</span>
-                        <span className="text-[8px] font-black uppercase tracking-widest">General</span>
-                    </button>
-                </div>
+            {/* Bottom Navigation Bar */}
+            <nav className="fixed bottom-0 left-0 right-0 glass-effect bg-white/90 border-t border-gray-100 pb-8 pt-3 px-6 flex justify-around items-center z-50">
+                <button className="flex flex-col items-center gap-1 text-charcoal/40 hover:text-primary transition-colors" onClick={() => onNavigate('teacher-selection')}>
+                    <span className="material-symbols-outlined !text-[26px] notranslate">home</span>
+                    <span className="text-[10px] font-bold uppercase tracking-widest">Inicio</span>
+                </button>
+                <button className="flex flex-col items-center gap-1 text-charcoal/40 hover:text-primary transition-colors" onClick={() => onNavigate('dashboard')}>
+                    <span className="material-symbols-outlined !text-[26px] notranslate">menu_book</span>
+                    <span className="text-[10px] font-bold uppercase tracking-widest">Lecciones</span>
+                </button>
+                <button className="flex flex-col items-center gap-1 text-charcoal/40 hover:text-primary transition-colors" onClick={() => onNavigate('reuniones')}>
+                    <span className="material-symbols-outlined !text-[26px] notranslate">event</span>
+                    <span className="text-[10px] font-bold uppercase tracking-widest">Reuniones</span>
+                </button>
+                
+                {isAdmin && (
+                    <>
+                        <button className="flex flex-col items-center gap-1 text-charcoal/40 hover:text-primary transition-colors" onClick={() => onNavigate('estudiantes')}>
+                            <span className="material-symbols-outlined !text-[26px] notranslate">school</span>
+                            <span className="text-[10px] font-bold uppercase tracking-widest">Alumnos</span>
+                        </button>
+                        <button className="flex flex-col items-center gap-1 text-charcoal/40 hover:text-primary transition-colors" onClick={() => onNavigate('reportes')}>
+                            <span className="material-symbols-outlined !text-[26px] notranslate">bar_chart</span>
+                            <span className="text-[10px] font-bold uppercase tracking-widest">Reportes</span>
+                        </button>
+                        <button className="flex flex-col items-center gap-1 text-charcoal/40 hover:text-primary transition-colors" onClick={() => onNavigate('maestros')}>
+                            <span className="material-symbols-outlined !text-[26px] notranslate">group</span>
+                            <span className="text-[10px] font-bold uppercase tracking-widest">Maestros</span>
+                        </button>
+                    </>
+                )}
             </nav>
         </div>
     );

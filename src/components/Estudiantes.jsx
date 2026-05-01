@@ -325,20 +325,22 @@ const Estudiantes = ({ estudiantes = [], onNavigate, onEditEstudiante, onNewEstu
                                     </div>
                                     <div className="flex gap-2">
                                         {isAdmin && (
-                                            <button
-                                                onClick={() => setStudentToDelete(estudiante)}
-                                                className="size-10 rounded-full bg-red-50 text-red-400 flex items-center justify-center hover:bg-red-500 hover:text-white transition-all shadow-sm"
-                                                title="Eliminar"
-                                            >
-                                                <span className="material-symbols-outlined !text-xl notranslate">delete</span>
-                                            </button>
+                                            <>
+                                                <button
+                                                    onClick={() => setStudentToDelete(estudiante)}
+                                                    className="size-10 rounded-full bg-red-50 text-red-400 flex items-center justify-center hover:bg-red-500 hover:text-white transition-all shadow-sm"
+                                                    title="Eliminar"
+                                                >
+                                                    <span className="material-symbols-outlined !text-xl notranslate">delete</span>
+                                                </button>
+                                                <button
+                                                    onClick={() => onEditEstudiante(estudiante)}
+                                                    className="size-10 rounded-full bg-bone text-charcoal/40 flex items-center justify-center hover:bg-primary/5 hover:text-primary transition-colors shadow-sm"
+                                                >
+                                                    <span className="material-symbols-outlined notranslate">edit</span>
+                                                </button>
+                                            </>
                                         )}
-                                        <button
-                                            onClick={() => onEditEstudiante(estudiante)}
-                                            className="size-10 rounded-full bg-bone text-charcoal/40 flex items-center justify-center hover:bg-primary/5 hover:text-primary transition-colors shadow-sm"
-                                        >
-                                            <span className="material-symbols-outlined notranslate">edit</span>
-                                        </button>
                                     </div>
                                 </div>
                             )) : (
@@ -456,6 +458,18 @@ const Estudiantes = ({ estudiantes = [], onNavigate, onEditEstudiante, onNewEstu
                     <span className="material-symbols-outlined !text-[26px] fill-1 notranslate">school</span>
                     <span className="text-[10px] font-black uppercase tracking-widest">Alumnos</span>
                 </button>
+                {isAdmin && (
+                    <>
+                        <button className="flex flex-col items-center gap-1 text-charcoal/40 hover:text-charcoal transition-colors" onClick={() => onNavigate('reportes')}>
+                            <span className="material-symbols-outlined !text-[26px] notranslate">bar_chart</span>
+                            <span className="text-[10px] font-bold uppercase tracking-widest">Reportes</span>
+                        </button>
+                        <button className="flex flex-col items-center gap-1 text-charcoal/40 hover:text-charcoal transition-colors" onClick={() => onNavigate('maestros')}>
+                            <span className="material-symbols-outlined !text-[26px] notranslate">group</span>
+                            <span className="text-[10px] font-bold uppercase tracking-widest">Maestros</span>
+                        </button>
+                    </>
+                )}
             </nav>
         </div>
     );
