@@ -15,9 +15,54 @@ import TeacherSelectionView from './components/TeacherSelectionView';
 import TeacherScheduleView from './components/TeacherScheduleView';
 import AsistenciaView from './components/AsistenciaView';
 import ReunionesView from './components/ReunionesView';
+import * as XLSX from 'xlsx';
 
 function App() {
   const [currentView, setCurrentView] = useState('teacher-selection'); // 'teacher-selection', 'teacher-schedule', 'asistencia', 'dashboard', 'maestros', 'calendario'
+  // ... rest of state ...
+  
+  // Agregar la función de backup
+  const handleBackup = async () => {
+    try {
+      setLoading(true);
+      const res = await fetch('/api/backup');
+      if (!res.ok) throw new Error('Error al obtener datos de respaldo');
+      
+      const data = await res.json();
+      
+      // Crear Workbook
+      const wb = XLSX.utils.book_new();
+      
+      // Añadir cada tabla como una hoja
+      const wsMaestros = XLSX.utils.json_to_sheet(data.maestros);
+      XLSX.utils.book_append_sheet(wb, wsMaestros, "Maestros");
+      
+      const wsEstudiantes = XLSX.utils.json_to_sheet(data.estudiantes);
+      XLSX.utils.book_append_sheet(wb, wsEstudiantes, "Estudiantes");
+      
+      const wsProg = XLSX.utils.json_to_sheet(data.programacion);
+      XLSX.utils.book_append_sheet(wb, wsProg, "Programacion");
+      
+      const wsAsis = XLSX.utils.json_to_sheet(data.asistencia);
+      XLSX.utils.book_append_sheet(wb, wsAsis, "Asistencia");
+      
+      const wsReuniones = XLSX.utils.json_to_sheet(data.reuniones);
+      XLSX.utils.book_append_sheet(wb, wsReuniones, "Reuniones");
+
+      const wsBitacora = XLSX.utils.json_to_sheet(data.bitacora);
+      XLSX.utils.book_append_sheet(wb, wsBitacora, "Bitacora");
+      
+      // Descargar
+      const dateStr = new Date().toISOString().split('T')[0];
+      XLSX.writeFile(wb, `Respaldo_IBGV_${dateStr}.xlsx`);
+      
+    } catch (err) {
+      console.error("Backup error:", err);
+      alert("Error al generar la copia de seguridad: " + err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
   const [selectedTeacher, setSelectedTeacher] = useState(null);
   const [clases, setClases] = useState([]);
   const [reuniones, setReuniones] = useState([]);
@@ -195,7 +240,11 @@ function App() {
           clases={clases}
           onSelectClase={setSelectedClase}
           onNavigate={setCurrentView}
-          onNewClass={() => setShowClassForm(true)}
+          onNewClass={() => {
+            setEditingClase(null);
+            setShowClassForm(true);
+          }}
+          onBackup={handleBackup}
           onEditObservations={setObservationsClase}
           isAdmin={isAdmin}
           onLoginClick={() => setShowLoginModal(true)}

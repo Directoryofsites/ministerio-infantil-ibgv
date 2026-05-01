@@ -245,6 +245,34 @@ app.get('/api/ministerio', async (req, res) => {
     }
 });
 
+app.get('/api/backup', async (req, res) => {
+    try {
+        const maestros = await pool.query('SELECT * FROM maestros ORDER BY nombre ASC');
+        const estudiantes = await pool.query('SELECT * FROM estudiantes ORDER BY nombre ASC');
+        const programacion = await pool.query('SELECT * FROM programacion ORDER BY fecha ASC');
+        const asistencia = await pool.query('SELECT * FROM asistencia ORDER BY fecha ASC');
+        const reuniones = await pool.query('SELECT * FROM reuniones ORDER BY fecha ASC');
+        const bitacora = await pool.query('SELECT * FROM bitacora ORDER BY fecha_creacion ASC');
+
+        res.json({
+            maestros: maestros.rows,
+            estudiantes: estudiantes.rows,
+            programacion: programacion.rows,
+            asistencia: asistencia.rows,
+            reuniones: reuniones.rows,
+            bitacora: bitacora.rows,
+            metadata: {
+                iglesia: "IBGV - Escuela Infantil",
+                fecha_respaldo: new Date().toISOString(),
+                version: "1.0.0"
+            }
+        });
+    } catch (err) {
+        console.error("!!! Error GET /api/backup:", err);
+        res.status(500).json({ error: 'Error al generar datos de respaldo' });
+    }
+});
+
 app.post('/api/programacion', async (req, res) => {
     const { id, fecha, leccion, asignaciones } = req.body;
     try {

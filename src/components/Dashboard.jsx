@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Dashboard = ({ clases, onSelectClase, onNavigate, onNewClass, onEditObservations, isAdmin, onLoginClick, onLogout }) => {
+const Dashboard = ({ clases, onSelectClase, onNavigate, onNewClass, onBackup, onEditObservations, isAdmin, onLoginClick, onLogout }) => {
     const [selectedPeriod, setSelectedPeriod] = React.useState('all');
 
     // Obtener lista única de Mes-Año de las clases
@@ -81,13 +81,23 @@ const Dashboard = ({ clases, onSelectClase, onNavigate, onNewClass, onEditObserv
                                     <h2 className="text-xs font-black uppercase tracking-widest text-primary">Próximos Eventos</h2>
                                 </div>
                                 <p className="text-xl font-extrabold text-charcoal mb-6">Gestiona tus clases hoy</p>
-                                <button
-                                    className="flex items-center justify-center gap-3 w-full bg-primary hover:bg-[#a6191e] text-white font-bold py-4 px-4 rounded-xl transition-all active:scale-[0.98] shadow-lg shadow-primary/20"
-                                    onClick={onNewClass}
-                                >
-                                    <span className="material-symbols-outlined !text-xl notranslate">add_circle</span>
-                                    <span className="tracking-wide">NUEVA CLASE</span>
-                                </button>
+                                <div className="flex flex-col gap-3">
+                                    <button
+                                        className="flex items-center justify-center gap-3 w-full bg-primary hover:bg-[#a6191e] text-white font-bold py-4 px-4 rounded-xl transition-all active:scale-[0.98] shadow-lg shadow-primary/20"
+                                        onClick={onNewClass}
+                                    >
+                                        <span className="material-symbols-outlined !text-xl notranslate">add_circle</span>
+                                        <span className="tracking-wide uppercase">Nueva Clase</span>
+                                    </button>
+                                    
+                                    <button
+                                        className="flex items-center justify-center gap-3 w-full bg-white border-2 border-gray-100 hover:border-primary/20 text-charcoal font-bold py-3 px-4 rounded-xl transition-all active:scale-[0.98]"
+                                        onClick={onBackup}
+                                    >
+                                        <span className="material-symbols-outlined !text-xl text-primary notranslate">cloud_download</span>
+                                        <span className="tracking-wide text-sm">COPIA DE SEGURIDAD</span>
+                                    </button>
+                                </div>
                             </div>
                             <div className="absolute -right-8 -bottom-8 opacity-[0.03] rotate-12 pointer-events-none">
                                 <span className="material-symbols-outlined !text-[140px] text-charcoal notranslate">auto_stories</span>
