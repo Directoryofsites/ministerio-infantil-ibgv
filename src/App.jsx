@@ -32,14 +32,8 @@ function App() {
   const [estudiantes, setEstudiantes] = useState([]);
   const [showEstudianteForm, setShowEstudianteForm] = useState(false);
   const [editingEstudiante, setEditingEstudiante] = useState(null);
-  const [isAdmin, setIsAdmin] = useState(() => {
-    return localStorage.getItem('ibgv_admin') === 'true';
-  });
+  const [isAdmin, setIsAdmin] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
-
-  useEffect(() => {
-    localStorage.setItem('ibgv_admin', isAdmin);
-  }, [isAdmin]);
 
   const fetchClases = async () => {
     setLoading(true);
@@ -159,13 +153,12 @@ function App() {
     setSelectedClase(null);
   };
 
-  const canManageContent = isAdmin || (selectedTeacher?.rol === 'Administrador');
-
   return (
     <div className="min-h-screen bg-bone font-display text-charcoal">
       {currentView === 'teacher-selection' && (
         <TeacherSelectionView
           onSelectTeacher={(m) => {
+            setIsAdmin(false); // Resetear admin al cambiar de maestro
             setSelectedTeacher(m);
             setCurrentView('teacher-schedule');
           }}
@@ -204,7 +197,7 @@ function App() {
           onNavigate={setCurrentView}
           onNewClass={() => setShowClassForm(true)}
           onEditObservations={setObservationsClase}
-          isAdmin={canManageContent}
+          isAdmin={isAdmin}
           onLoginClick={() => setShowLoginModal(true)}
           onLogout={() => setIsAdmin(false)}
         />
@@ -214,7 +207,7 @@ function App() {
         <ReunionesView
           reuniones={reuniones}
           onNavigate={setCurrentView}
-          isAdmin={canManageContent}
+          isAdmin={isAdmin}
           selectedTeacher={selectedTeacher}
           onRefresh={fetchClases}
         />
@@ -240,7 +233,7 @@ function App() {
           onNavigate={setCurrentView}
           onNewEstudiante={() => { setEditingEstudiante(null); setShowEstudianteForm(true); }}
           onEditEstudiante={(e) => { setEditingEstudiante(e); setShowEstudianteForm(true); }}
-          isAdmin={canManageContent}
+          isAdmin={isAdmin}
         />
       )}
 
@@ -292,7 +285,7 @@ function App() {
           }}
           onDelete={handleDeleteClass}
           onDuplicate={handleDuplicateClass}
-          isAdmin={canManageContent}
+          isAdmin={isAdmin}
           onRefresh={fetchClases}
         />
       )}
@@ -351,6 +344,7 @@ function App() {
         isOpen={showLoginModal}
         onClose={() => setShowLoginModal(false)}
         onLoginSuccess={() => setIsAdmin(true)}
+        selectedTeacher={selectedTeacher}
       />
     </div>
   );

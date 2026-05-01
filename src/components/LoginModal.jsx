@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 
-const LoginModal = ({ isOpen, onClose, onLoginSuccess }) => {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+const LoginModal = ({ isOpen, onClose, onLoginSuccess, selectedTeacher }) => {
+    const [pin, setPin] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
 
@@ -12,24 +11,32 @@ const LoginModal = ({ isOpen, onClose, onLoginSuccess }) => {
         e.preventDefault();
         setLoading(true);
         setError('');
-        try {
-            const res = await fetch('/api/login', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ username, password })
-            });
-            const data = await res.json();
-            if (data.success) {
-                onLoginSuccess();
-                onClose();
-            } else {
-                setError('Usuario o contraseña incorrectos');
-            }
-        } catch (err) {
-            setError('Error de conexión con el servidor');
-        } finally {
+
+        // Validar que hay un maestro seleccionado
+        if (!selectedTeacher) {
+            setError('Debes seleccionar un maestro primero para acceder al modo administrador.');
             setLoading(false);
+            return;
         }
+
+        // Validar que el maestro tiene PIN asignado
+        if (!selectedTeacher.pin) {
+            setError('Este usuario no tiene acceso administrativo (sin PIN asignado).');
+            setLoading(false);
+            return;
+        }
+
+        // Comparar el PIN ingresado con el PIN del maestro seleccionado
+        if (pin.trim() === String(selectedTeacher.pin).trim()) {
+            onLoginSuccess();
+            onClose();
+            setPin('');
+            setError('');
+        } else {
+            setError('PIN incorrecto. Intenta de nuevo.');
+        }
+
+        setLoading(false);
     };
 
     return (
@@ -42,31 +49,29 @@ const LoginModal = ({ isOpen, onClose, onLoginSuccess }) => {
                             <span className="material-symbols-outlined text-4xl notranslate">lock_person</span>
                         </div>
                         <h2 className="text-2xl font-black text-charcoal">Modo Administrador</h2>
-                        <p className="text-silver font-bold text-xs uppercase tracking-widest mt-1">Ingresa tus credenciales</p>
+                        <p className="text-silver font-bold text-xs uppercase tracking-widest mt-1">Ingresa tu PIN de 4 dígitos</p>
+                        {selectedTeacher && (
+                            <p className="text-[11px] text-primary font-bold mt-2 bg-primary/5 px-3 py-1 rounded-full">
+                                {selectedTeacher.nombre}
+                            </p>
+                        )}
                     </div>
 
                     <form onSubmit={handleSubmit} className="space-y-4">
                         <div className="space-y-1">
-                            <label className="text-[10px] font-black uppercase tracking-widest text-charcoal/40 ml-4">Usuario</label>
-                            <input
-                                required
-                                type="text"
-                                value={username}
-                                onChange={(e) => setUsername(e.target.value)}
-                                className="w-full h-14 bg-bone rounded-2xl px-5 font-bold text-charcoal outline-none focus:ring-2 focus:ring-primary/20 transition-all"
-                                placeholder="Ej: admin"
-                            />
-                        </div>
-
-                        <div className="space-y-1">
-                            <label className="text-[10px] font-black uppercase tracking-widest text-charcoal/40 ml-4">Contraseña</label>
+                            <label className="text-[10px] font-black uppercase tracking-widest text-charcoal/40 ml-4">
+                                PIN de Acceso (4 dígitos)
+                            </label>
                             <input
                                 required
                                 type="password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                className="w-full h-14 bg-bone rounded-2xl px-5 font-bold text-charcoal outline-none focus:ring-2 focus:ring-primary/20 transition-all"
-                                placeholder="••••••••"
+                                inputMode="numeric"
+                                maxLength={4}
+                                value={pin}
+                                onChange={(e) => setPin(e.target.value.replace(/\D/g, '').slice(0, 4))}
+                                className="w-full h-14 bg-bone rounded-2xl px-5 font-bold text-charcoal outline-none focus:ring-2 focus:ring-primary/20 transition-all text-center text-2xl tracking-[0.5em]"
+                                placeholder="••••"
+                                autoFocus
                             />
                         </div>
 
@@ -79,15 +84,15 @@ const LoginModal = ({ isOpen, onClose, onLoginSuccess }) => {
 
                         <button
                             type="submit"
-                            disabled={loading}
+                            disabled={loading || pin.length < 4}
                             className="w-full h-14 bg-primary text-white font-black rounded-2xl shadow-lg shadow-primary/30 active:scale-95 transition-all disabled:opacity-50 mt-4"
                         >
-                            {loading ? 'Verificando...' : 'Iniciar Sesión'}
+                            {loading ? 'Verificando...' : 'Desbloquear'}
                         </button>
 
                         <button
                             type="button"
-                            onClick={onClose}
+                            onClick={() => { onClose(); setPin(''); setError(''); }}
                             className="w-full h-12 text-silver font-bold text-sm hover:text-charcoal transition-colors"
                         >
                             Cancelar
