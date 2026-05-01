@@ -11,61 +11,83 @@ const Estudiantes = ({ estudiantes = [], onNavigate, onEditEstudiante, onNewEstu
     const [selectedMonth, setSelectedMonth] = useState(new Date().toLocaleString('es-ES', { month: 'long' }).toLowerCase());
 
     const exportPDF = () => {
-        const doc = new jsPDF();
+        const doc = new jsPDF('l', 'mm', 'a4'); // Orientación horizontal para que quepan bien las observaciones
         const now = new Date().toLocaleDateString('es-ES');
+        const nowFull = new Date().toLocaleString('es-ES');
+
+        // 1. Encabezado Institucional (Diseño Premium)
+        doc.setFillColor(196, 30, 36); // Rojo Primario IBGV
+        doc.rect(0, 0, 297, 35, 'F');
+        
+        doc.setTextColor(255, 255, 255);
+        doc.setFontSize(22);
+        doc.setFont("helvetica", "bold");
+        doc.text("IGLESIA BÍBLICA GRACIA Y VIDA", 20, 18);
+        
+        doc.setFontSize(10);
+        doc.setFont("helvetica", "normal");
+        doc.text("Ministerio Infantil - Directorio Oficial de Alumnos", 20, 26);
+        
+        const groupLabel = selectedGroup === 'all' ? "TODOS LOS GRUPOS" : getGroupName(selectedGroup).toUpperCase();
+        doc.setFontSize(12);
+        doc.setFont("helvetica", "bold");
+        doc.text(`REPORTE: ${groupLabel}`, 20, 32);
 
         if (viewMode === 'lista') {
-            doc.setFontSize(20);
-            doc.setTextColor(40);
-            doc.text('Directorio de Alumnos - IBGV', 14, 22);
+            // Ordenar alfabéticamente para el PDF
+            const sortedStudents = [...filtered].sort((a, b) => a.nombre.localeCompare(b.nombre));
 
-            doc.setFontSize(10);
-            doc.setTextColor(100);
-            doc.text(`Fecha de reporte: ${now}`, 14, 30);
-            doc.text(`Filtro: ${getGroupName(selectedGroup)}`, 14, 35);
-
-            const tableData = filtered.map(e => [
-                e.nombre,
+            const tableData = sortedStudents.map((e, index) => [
+                index + 1,
+                e.nombre.toUpperCase(),
                 getGroupName(e.grupo),
-                e.cumpleanos || 'N/A',
-                getAttendanceInfo(e.id).label,
-                getAttendanceInfo(e.id).ratio
+                e.cumpleanos || 'No reg.',
+                e.whatsapp_padres || 'Sin contacto',
+                e.observaciones || 'Sin observaciones en hoja de vida'
             ]);
 
             autoTable(doc, {
                 startY: 45,
-                head: [['Nombre', 'Grupo', 'Cumpleaños', 'Asistencia', 'Ratio']],
+                head: [['#', 'Nombre Completo', 'Grupo', 'Cumpleaños', 'WhatsApp Padres', 'Observaciones / Hoja de Vida']],
                 body: tableData,
-                headStyles: { fillColor: [232, 70, 70] },
-                alternateRowStyles: { fillColor: [245, 245, 245] },
+                theme: 'striped',
+                headStyles: { fillColor: [196, 30, 36], textColor: [255, 255, 255], fontStyle: 'bold', fontSize: 10 },
+                styles: { fontSize: 9, cellPadding: 4, valign: 'middle' },
+                columnStyles: {
+                    0: { cellWidth: 10 },
+                    1: { cellWidth: 60, fontStyle: 'bold' },
+                    2: { cellWidth: 25 },
+                    3: { cellWidth: 30 },
+                    4: { cellWidth: 35 },
+                    5: { cellWidth: 'auto' } // Las observaciones toman el espacio restante
+                },
+                didDrawPage: (data) => {
+                    doc.setFontSize(8);
+                    doc.setTextColor(150);
+                    doc.text(`Generado el: ${nowFull} - Página ${data.pageNumber}`, 20, 200);
+                }
             });
 
-            doc.save(`Directorio_Alumnos_${selectedGroup}_${now}.pdf`);
+            doc.save(`Hojas_de_Vida_IBGV_${selectedGroup}_${now}.pdf`);
         } else {
-            doc.setFontSize(20);
-            doc.setTextColor(40);
-            doc.text(`Cumpleaños de ${selectedMonth.toUpperCase()}`, 14, 22);
-
-            doc.setFontSize(10);
-            doc.setTextColor(100);
-            doc.text(`Ministerio Infantil IBGV - ${now}`, 14, 30);
-
+            // Reporte de Cumpleaños (Mantiene diseño premium)
             const tableData = cumpleanosDelMes.map(e => [
-                e.nombre,
+                e.nombre.toUpperCase(),
                 e.cumpleanos,
                 e.whatsapp_padres || 'N/A',
                 getGroupName(e.grupo)
             ]);
 
             autoTable(doc, {
-                startY: 40,
-                head: [['Alumno', 'Fecha', 'Contacto Padres', 'Grupo']],
+                startY: 45,
+                head: [['Alumno', 'Fecha de Cumpleaños', 'Contacto Padres', 'Grupo']],
                 body: tableData,
-                headStyles: { fillColor: [232, 70, 70] },
-                styles: { fontSize: 9 }
+                theme: 'grid',
+                headStyles: { fillColor: [196, 30, 36], textColor: [255, 255, 255] },
+                styles: { fontSize: 10, cellPadding: 5 }
             });
 
-            doc.save(`Cumpleaños_${selectedMonth}_${now}.pdf`);
+            doc.save(`Cumpleanos_IBGV_${selectedMonth.toUpperCase()}_${now}.pdf`);
         }
     };
 
