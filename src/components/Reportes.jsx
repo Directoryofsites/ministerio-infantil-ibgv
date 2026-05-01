@@ -222,9 +222,21 @@ const Reportes = ({ clases, maestros, onNavigate }) => {
                     <span className="material-symbols-outlined !text-[26px] notranslate">menu_book</span>
                     <span className="text-[10px] font-bold uppercase tracking-widest">Lecciones</span>
                 </button>
+                <button className="flex flex-col items-center gap-1 text-charcoal/40 hover:text-charcoal transition-colors" onClick={() => onNavigate('reuniones')}>
+                    <span className="material-symbols-outlined !text-[26px] notranslate">event</span>
+                    <span className="text-[10px] font-bold uppercase tracking-widest">Reuniones</span>
+                </button>
+                <button className="flex flex-col items-center gap-1 text-charcoal/40 hover:text-charcoal transition-colors" onClick={() => onNavigate('estudiantes')}>
+                    <span className="material-symbols-outlined !text-[26px] notranslate">school</span>
+                    <span className="text-[10px] font-bold uppercase tracking-widest">Alumnos</span>
+                </button>
                 <button className="flex flex-col items-center gap-1 text-primary nav-indicator active">
                     <span className="material-symbols-outlined !text-[26px] fill-1 notranslate">bar_chart</span>
                     <span className="text-[10px] font-black uppercase tracking-widest">Reportes</span>
+                </button>
+                <button className="flex flex-col items-center gap-1 text-charcoal/40 hover:text-charcoal transition-colors" onClick={() => onNavigate('maestros')}>
+                    <span className="material-symbols-outlined !text-[26px] notranslate">group</span>
+                    <span className="text-[10px] font-bold uppercase tracking-widest">Maestros</span>
                 </button>
             </nav>
         </div>

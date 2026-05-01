@@ -458,18 +458,14 @@ const Estudiantes = ({ estudiantes = [], onNavigate, onEditEstudiante, onNewEstu
                     <span className="material-symbols-outlined !text-[26px] fill-1 notranslate">school</span>
                     <span className="text-[10px] font-black uppercase tracking-widest">Alumnos</span>
                 </button>
-                {isAdmin && (
-                    <>
-                        <button className="flex flex-col items-center gap-1 text-charcoal/40 hover:text-charcoal transition-colors" onClick={() => onNavigate('reportes')}>
-                            <span className="material-symbols-outlined !text-[26px] notranslate">bar_chart</span>
-                            <span className="text-[10px] font-bold uppercase tracking-widest">Reportes</span>
-                        </button>
-                        <button className="flex flex-col items-center gap-1 text-charcoal/40 hover:text-charcoal transition-colors" onClick={() => onNavigate('maestros')}>
-                            <span className="material-symbols-outlined !text-[26px] notranslate">group</span>
-                            <span className="text-[10px] font-bold uppercase tracking-widest">Maestros</span>
-                        </button>
-                    </>
-                )}
+                <button className="flex flex-col items-center gap-1 text-charcoal/40 hover:text-charcoal transition-colors" onClick={() => onNavigate('reportes')}>
+                    <span className="material-symbols-outlined !text-[26px] notranslate">bar_chart</span>
+                    <span className="text-[10px] font-bold uppercase tracking-widest">Reportes</span>
+                </button>
+                <button className="flex flex-col items-center gap-1 text-charcoal/40 hover:text-charcoal transition-colors" onClick={() => onNavigate('maestros')}>
+                    <span className="material-symbols-outlined !text-[26px] notranslate">group</span>
+                    <span className="text-[10px] font-bold uppercase tracking-widest">Maestros</span>
+                </button>
             </nav>
         </div>
     );

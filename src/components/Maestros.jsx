@@ -192,19 +192,14 @@ const Maestros = ({ onNavigate, onNewMaestro, onEditMaestro, onDeleteMaestro, is
                     <span className="text-[10px] font-bold uppercase tracking-widest">Reuniones</span>
                 </button>
                 
-                {isAdmin && (
-                    <>
-                        <button className="flex flex-col items-center gap-1 text-charcoal/40 hover:text-charcoal transition-colors" onClick={() => onNavigate('estudiantes')}>
-                            <span className="material-symbols-outlined !text-[26px] notranslate">school</span>
-                            <span className="text-[10px] font-bold uppercase tracking-widest">Alumnos</span>
-                        </button>
-                        <button className="flex flex-col items-center gap-1 text-charcoal/40 hover:text-charcoal transition-colors" onClick={() => onNavigate('reportes')}>
-                            <span className="material-symbols-outlined !text-[26px] notranslate">bar_chart</span>
-                            <span className="text-[10px] font-bold uppercase tracking-widest">Reportes</span>
-                        </button>
-                    </>
-                )}
-
+                <button className="flex flex-col items-center gap-1 text-charcoal/40 hover:text-charcoal transition-colors" onClick={() => onNavigate('estudiantes')}>
+                    <span className="material-symbols-outlined !text-[26px] notranslate">school</span>
+                    <span className="text-[10px] font-bold uppercase tracking-widest">Alumnos</span>
+                </button>
+                <button className="flex flex-col items-center gap-1 text-charcoal/40 hover:text-charcoal transition-colors" onClick={() => onNavigate('reportes')}>
+                    <span className="material-symbols-outlined !text-[26px] notranslate">bar_chart</span>
+                    <span className="text-[10px] font-bold uppercase tracking-widest">Reportes</span>
+                </button>
                 <button className="flex flex-col items-center gap-1 text-primary nav-indicator active" onClick={() => onNavigate('maestros')}>
                     <span className="material-symbols-outlined !text-[26px] fill-1 notranslate">group</span>
                     <span className="text-[10px] font-black uppercase tracking-widest">Maestros</span>
