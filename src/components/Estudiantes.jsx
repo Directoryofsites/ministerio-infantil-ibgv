@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { jsPDF } from 'jspdf';
 import autoTable from 'jspdf-autotable';
+import * as XLSX from 'xlsx';
 
 const Estudiantes = ({ estudiantes = [], onNavigate, onEditEstudiante, onNewEstudiante, isAdmin }) => {
     const [searchTerm, setSearchTerm] = useState('');
@@ -9,6 +10,40 @@ const Estudiantes = ({ estudiantes = [], onNavigate, onEditEstudiante, onNewEstu
     const [studentToDelete, setStudentToDelete] = useState(null);
     const [viewMode, setViewMode] = useState('lista'); // 'lista' o 'cumpleanos'
     const [selectedMonth, setSelectedMonth] = useState(new Date().toLocaleString('es-ES', { month: 'long' }).toLowerCase());
+
+    const exportExcel = () => {
+        const sortedStudents = [...filtered].sort((a, b) => a.nombre.localeCompare(b.nombre));
+        
+        // Preparar los datos para Excel
+        const data = sortedStudents.map((e, index) => ({
+            '#': index + 1,
+            'NOMBRE COMPLETO': e.nombre.toUpperCase(),
+            'GRUPO': getGroupName(e.grupo),
+            'CUMPLEAÑOS': e.cumpleanos || '',
+            'WHATSAPP PADRES': e.whatsapp_padres || '',
+            'HOJA DE VIDA / OBSERVACIONES': e.observaciones || ''
+        }));
+
+        // Crear libro y hoja
+        const ws = XLSX.utils.json_to_sheet(data);
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, "Alumnos IBGV");
+
+        // Ajustar anchos de columna automáticamente
+        const wscols = [
+            { wch: 5 },  // #
+            { wch: 40 }, // Nombre
+            { wch: 15 }, // Grupo
+            { wch: 20 }, // Cumpleaños
+            { wch: 20 }, // WhatsApp
+            { wch: 60 }, // Observaciones
+        ];
+        ws['!cols'] = wscols;
+
+        // Descargar archivo
+        const fileName = `Alumnos_IBGV_${selectedGroup}_${new Date().toLocaleDateString()}.xlsx`;
+        XLSX.writeFile(wb, fileName);
+    };
 
     const exportPDF = () => {
         const doc = new jsPDF('l', 'mm', 'a4'); // Orientación horizontal para que quepan bien las observaciones
@@ -186,8 +221,15 @@ const Estudiantes = ({ estudiantes = [], onNavigate, onEditEstudiante, onNewEstu
                     </div>
                     <div className="flex items-center gap-2">
                         <button
+                            onClick={exportExcel}
+                            className="size-10 bg-white border border-gray-100 text-green-600 rounded-full flex items-center justify-center shadow-soft hover:bg-green-50 transition-all active:scale-90"
+                            title="Descargar Excel"
+                        >
+                            <span className="material-symbols-outlined !text-xl notranslate">table_view</span>
+                        </button>
+                        <button
                             onClick={exportPDF}
-                            className="size-10 bg-white border border-gray-100 text-charcoal/40 rounded-full flex items-center justify-center shadow-soft hover:bg-red-50 hover:text-red-500 transition-all active:scale-90"
+                            className="size-10 bg-white border border-gray-100 text-red-600 rounded-full flex items-center justify-center shadow-soft hover:bg-red-50 transition-all active:scale-90"
                             title="Descargar PDF"
                         >
                             <span className="material-symbols-outlined !text-xl notranslate">picture_as_pdf</span>
