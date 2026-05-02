@@ -53,6 +53,8 @@ const initDb = async () => {
         // Migration step: PDF and Word columns if they don't exist
         await pool.query(`ALTER TABLE programacion ADD COLUMN IF NOT EXISTS archivo_pdf_datos BYTEA`);
         await pool.query(`ALTER TABLE programacion ADD COLUMN IF NOT EXISTS archivo_pdf_nombre VARCHAR(255)`);
+        await pool.query(`ALTER TABLE programacion ADD COLUMN IF NOT EXISTS archivo_ficha_pdf_datos BYTEA`);
+        await pool.query(`ALTER TABLE programacion ADD COLUMN IF NOT EXISTS archivo_ficha_pdf_nombre VARCHAR(255)`);
         await pool.query(`ALTER TABLE programacion ADD COLUMN IF NOT EXISTS archivo_word_datos BYTEA`);
         await pool.query(`ALTER TABLE programacion ADD COLUMN IF NOT EXISTS archivo_word_nombre VARCHAR(255)`);
 
@@ -221,6 +223,8 @@ app.get('/api/ministerio', async (req, res) => {
                     observaciones: p.observaciones || '',
                     tiene_pdf: !!p.archivo_pdf_nombre,
                     pdf_nombre: p.archivo_pdf_nombre || null,
+                    tiene_ficha_pdf: !!p.archivo_ficha_pdf_nombre,
+                    ficha_pdf_nombre: p.archivo_ficha_pdf_nombre || null,
                     tiene_word: !!p.archivo_word_nombre,
                     word_nombre: p.archivo_word_nombre || null
                 }))
@@ -444,6 +448,48 @@ app.get('/api/programacion/:id/word', async (req, res) => {
     } catch (err) {
         console.error("!!! Error GET /api/programacion/:id/word:", err);
         res.status(500).json({ error: 'Error al descargar planeación' });
+    }
+});
+
+// --- RUTAS FICHA PDF PROGRAMACION ---
+app.post('/api/programacion/:id/ficha', async (req, res) => {
+    const id = req.params.id.trim();
+    const { pdf_base64, pdf_nombre } = req.body;
+    try {
+        if (!pdf_base64 || !pdf_nombre) return res.status(400).json({ error: 'Faltan datos del PDF' });
+        const base64Data = pdf_base64.replace(/^data:application\/pdf;base64,/, "");
+        const buffer = Buffer.from(base64Data, 'base64');
+        await pool.query('UPDATE programacion SET archivo_ficha_pdf_datos = $1, archivo_ficha_pdf_nombre = $2 WHERE id = $3', [buffer, pdf_nombre, id]);
+        res.json({ success: true, message: 'Ficha guardada exitosamente' });
+    } catch (err) {
+        console.error("!!! Error POST /api/programacion/:id/ficha:", err);
+        res.status(500).json({ error: 'Error al subir ficha' });
+    }
+});
+app.delete('/api/programacion/:id/ficha', async (req, res) => {
+    const id = req.params.id.trim();
+    try {
+        await pool.query('UPDATE programacion SET archivo_ficha_pdf_datos = NULL, archivo_ficha_pdf_nombre = NULL WHERE id = $1', [id]);
+        res.json({ success: true, message: 'Ficha eliminada' });
+    } catch (err) {
+        console.error("!!! Error DELETE /api/programacion/:id/ficha:", err);
+        res.status(500).json({ error: 'Error al eliminar ficha' });
+    }
+});
+app.get('/api/programacion/:id/ficha', async (req, res) => {
+    const id = req.params.id.trim();
+    try {
+        const result = await pool.query('SELECT archivo_ficha_pdf_datos, archivo_ficha_pdf_nombre FROM programacion WHERE id = $1', [id]);
+        if (result.rowCount === 0 || !result.rows[0].archivo_ficha_pdf_datos) {
+            return res.status(404).json({ error: 'Ficha no encontrada' });
+        }
+        const file = result.rows[0];
+        res.setHeader('Content-Type', 'application/pdf');
+        res.setHeader('Content-Disposition', `attachment; filename="${file.archivo_ficha_pdf_nombre}"`);
+        res.send(file.archivo_ficha_pdf_datos);
+    } catch (err) {
+        console.error("!!! Error GET /api/programacion/:id/ficha:", err);
+        res.status(500).json({ error: 'Error al descargar ficha' });
     }
 });
 

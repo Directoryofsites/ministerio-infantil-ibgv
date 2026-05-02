@@ -224,13 +224,25 @@ const TeacherScheduleView = ({ teacher, clases, onBack, onSelectClase, onNavigat
                                                     <span className="material-symbols-outlined !text-[20px] notranslate">description</span>
                                                 </a>
                                             )}
-                                            <button
-                                                onClick={(e) => exportLessonPDF(e, clase)}
-                                                className="size-10 bg-red-50 text-red-500 rounded-2xl flex items-center justify-center hover:bg-red-500 hover:text-white transition-all shadow-sm"
-                                                title="Descargar Ficha de Lección (Resumen)"
-                                            >
-                                                <span className="material-symbols-outlined !text-xl notranslate">picture_as_pdf</span>
-                                            </button>
+                                            {clase.tiene_ficha_pdf ? (
+                                                <a
+                                                    href={`/api/programacion/${clase.id}/ficha`}
+                                                    download={clase.ficha_pdf_nombre}
+                                                    onClick={(e) => e.stopPropagation()}
+                                                    className="size-10 bg-red-600 text-white flex items-center justify-center rounded-2xl hover:bg-red-700 transition-all shadow-sm"
+                                                    title={`Descargar Ficha Técnica PDF: ${clase.ficha_pdf_nombre}`}
+                                                >
+                                                    <span className="material-symbols-outlined !text-[20px] notranslate">picture_as_pdf</span>
+                                                </a>
+                                            ) : (
+                                                <button
+                                                    onClick={(e) => exportLessonPDF(e, clase)}
+                                                    className="size-10 bg-red-50 text-red-500 rounded-2xl flex items-center justify-center hover:bg-red-500 hover:text-white transition-all shadow-sm"
+                                                    title="Generar Ficha de Lección (PDF)"
+                                                >
+                                                    <span className="material-symbols-outlined !text-xl notranslate">picture_as_pdf</span>
+                                                </button>
+                                            )}
                                             <div className="size-10 bg-primary/5 rounded-2xl flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors">
                                                 <span className="material-symbols-outlined !text-xl notranslate">calendar_today</span>
                                             </div>
